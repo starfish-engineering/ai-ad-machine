@@ -136,7 +136,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 h-screen bg-[var(--color-terminal)] border-r-2 border-[var(--color-border-harsh)] transition-all duration-300',
+        'h-screen bg-[var(--color-terminal)] border-r-2 border-[var(--color-border-harsh)] transition-all duration-300',
         collapsed ? 'w-16' : 'w-64'
       )}
     >
