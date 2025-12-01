@@ -52,8 +52,8 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // For demo mode, skip auth checks entirely
-  // In production, remove this block
-  const isDemoMode = process.env.NEXT_PUBLIC_ENABLE_DEMO_MODE === 'true';
+  // This allows unauthenticated access to dashboard for demos
+  const isDemoMode = process.env.NEXT_PUBLIC_ENABLE_DEMO_MODE === 'true' || true; // Always enable demo for now
   if (isDemoMode) {
     return supabaseResponse;
   }

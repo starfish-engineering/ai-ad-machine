@@ -75,19 +75,37 @@ export default function DemoPage() {
 
   return (
     <main className="pt-32">
+        {/* Quick Demo Access Banner */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">
+          <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-signal-green)] p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h2 className="font-display text-xl text-[var(--color-text-raw)] mb-1">TRY_DEMO_INSTANTLY</h2>
+              <p className="text-[11px] font-mono text-[var(--color-text-muted)]">
+                Skip the form and explore the dashboard with sample data right now.
+              </p>
+            </div>
+            <Link href="/dashboard">
+              <Button variant="signal" size="lg" className="whitespace-nowrap">
+                <Play className="w-4 h-4 mr-2" />
+                LAUNCH_DEMO →
+              </Button>
+            </Link>
+          </div>
+        </div>
+
         {/* Hero Section */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-full blur-3xl opacity-60" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-br from-[var(--color-signal-green)]/5 via-[var(--color-signal-cyan)]/5 to-[var(--color-signal-magenta)]/5 rounded-full blur-3xl opacity-60" />
           </div>
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="grid lg:grid-cols-2 gap-16 items-start">
               {/* Left Column - Info */}
               <div>
-                <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 rounded-full px-4 py-2 text-sm font-medium mb-6">
+                <div className="inline-flex items-center gap-2 bg-[var(--color-signal-green)]/10 text-[var(--color-signal-green)] border border-[var(--color-signal-green)] px-4 py-2 text-sm font-mono font-bold mb-6">
                   <Play className="w-4 h-4" />
-                  Live Product Demo
+                  LIVE_PRODUCT_DEMO
                 </div>
                 
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-6">
