@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useSidebar } from './sidebar-context';
+// TODO: WorkspaceSwitcher disabled - needs @/lib/workspace module
+// import { WorkspaceSwitcher } from '@/components/features/workspace-switcher';
 import {
   LayoutDashboard,
   Users,
@@ -165,6 +167,11 @@ export function Sidebar() {
             <PanelLeftClose className="w-4 h-4" />
           )}
         </button>
+      </div>
+
+      {/* Workspace Switcher */}
+      <div className="px-2 py-3 border-b border-[var(--color-border-harsh)]">
+        {/* <WorkspaceSwitcher collapsed={collapsed} /> */}
       </div>
 
       {/* Navigation */}
