@@ -59,11 +59,11 @@ const features = [
   },
 ];
 
-const liveStats = [
-  { label: 'TOTAL_AD_SPEND', value: '$2.4B', change: '+12.4%', type: 'positive' as const },
-  { label: 'ACTIVE_ACCOUNTS', value: '10,847', change: '+847', type: 'positive' as const },
-  { label: 'OPTIMIZATIONS', value: '2.1M', change: 'THIS_MONTH', type: 'neutral' as const },
-  { label: 'AVG_ROAS', value: '3.2x', change: '+0.4x', type: 'positive' as const },
+const liveStats: Array<{ label: string; value: string; change: string; type: 'positive' | 'negative' | 'neutral' }> = [
+  { label: 'TOTAL_AD_SPEND', value: '$2.4B', change: '+12.4%', type: 'positive' },
+  { label: 'ACTIVE_ACCOUNTS', value: '10,847', change: '+847', type: 'positive' },
+  { label: 'OPTIMIZATIONS', value: '2.1M', change: 'THIS_MONTH', type: 'neutral' },
+  { label: 'AVG_ROAS', value: '3.2x', change: '+0.4x', type: 'positive' },
 ];
 
 const testimonials = [

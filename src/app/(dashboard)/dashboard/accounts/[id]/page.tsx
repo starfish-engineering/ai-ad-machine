@@ -30,42 +30,42 @@ const kpiData = [
     value: '1,086',
     change: -55,
     icon: <Eye className="w-4 h-4" />,
-    sparklineData: [100, 95, 85, 78, 72, 65, 58, 52, 48, 45],
+    showSparkline: true,
   },
   {
     title: 'Clicks',
     value: '56',
     change: -49,
     icon: <MousePointer className="w-4 h-4" />,
-    sparklineData: [50, 48, 45, 42, 38, 35, 32, 30, 28, 26],
+    showSparkline: true,
   },
   {
     title: 'Cost',
     value: '$4,402',
     change: -33,
     icon: <DollarSign className="w-4 h-4" />,
-    sparklineData: [5000, 4800, 4600, 4500, 4400, 4350, 4320, 4350, 4380, 4402],
+    showSparkline: true,
   },
   {
     title: 'Avg CPC',
     value: '$78.60',
     change: 30,
     icon: <Target className="w-4 h-4" />,
-    sparklineData: [55, 58, 62, 65, 68, 72, 75, 76, 78, 79],
+    showSparkline: true,
   },
   {
     title: 'CTR',
     value: '5.2%',
     change: 14,
     icon: <Percent className="w-4 h-4" />,
-    sparklineData: [4.2, 4.4, 4.5, 4.6, 4.8, 4.9, 5.0, 5.1, 5.1, 5.2],
+    showSparkline: true,
   },
   {
     title: 'Conv',
     value: '14',
     change: -25,
     icon: <RotateCcw className="w-4 h-4" />,
-    sparklineData: [18, 17, 16, 16, 15, 15, 14, 14, 14, 14],
+    showSparkline: true,
   },
 ];
 
@@ -177,11 +177,11 @@ export default function AccountDashboard() {
               {kpiData.map((kpi) => (
                 <KPICard
                   key={kpi.title}
-                  title={kpi.title}
+                  label={kpi.title}
                   value={kpi.value}
                   change={kpi.change}
                   icon={kpi.icon}
-                  sparklineData={kpi.sparklineData}
+                  sparkline={kpi.showSparkline}
                 />
               ))}
             </div>
@@ -419,7 +419,7 @@ export default function AccountDashboard() {
             <CardContent>
               <div className="flex items-start gap-6">
                 <div className="pt-4">
-                  <AuditScore score={68} previousScore={65} />
+                  <AuditScore score={68} />
                 </div>
                 <div className="flex-1">
                   <table className="w-full text-sm">
