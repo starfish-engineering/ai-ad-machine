@@ -1,26 +1,1274 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Instrument+Serif:ital@0;1&family=Bebas+Neue&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATA-BRUTALIST DESIGN SYSTEM
+   AI-Terminal-Meets-Brutalism Aesthetic
+   With Light/Dark Theme Support
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ─── Typography ─────────────────────────────────────────────────────────── */
+  --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-serif: 'Instrument Serif', 'Georgia', serif;
+  --font-sans: 'Space Mono', monospace;
+  
+  /* ─── Signal Colors (Constant across themes) ────────────────────────────── */
+  --color-signal-green: #00ff41;
+  --color-signal-red: #ff0055;
+  --color-signal-yellow: #ffd000;
+  --color-signal-cyan: #00ffff;
+  --color-signal-magenta: #ff00ff;
+  --color-signal-orange: #ff6600;
+  
+  /* ─── Glitch & Effect Colors ─────────────────────────────────────────────── */
+  --color-glitch-1: #ff0055;
+  --color-glitch-2: #00ffff;
+  --color-glitch-3: #ff00ff;
+  
+  /* ─── Border Weights ─────────────────────────────────────────────────────── */
+  --border-brutal: 3px;
+  --border-harsh: 2px;
+  --border-thin: 1px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME VARIABLES - DARK MODE (Default)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root,
+[data-theme="dark"] {
+  /* ─── Core Brutalist Palette (Dark) ─────────────────────────────────────── */
+  --color-void: #0a0a0a;
+  --color-terminal: #0d1117;
+  --color-surface: #161b22;
+  --color-grid: #21262d;
+  --color-border-harsh: #30363d;
+  --color-text-raw: #ffffff;
+  --color-text-muted: #a8b2bd;
+  --color-text-dim: #6e7681;
+  
+  /* ─── Data Visualization Colors (Dark) ──────────────────────────────────── */
+  --color-metric-positive: #39d353;
+  --color-metric-negative: #f85149;
+  --color-metric-neutral: #58a6ff;
+  --color-metric-warning: #d29922;
+  
+  /* ─── Adjusted Signal Colors for Dark ───────────────────────────────────── */
+  --color-signal-green-bg: rgba(0, 255, 65, 0.1);
+  --color-signal-red-bg: rgba(255, 0, 85, 0.1);
+  --color-signal-yellow-bg: rgba(255, 208, 0, 0.1);
+  
+  /* ─── Shadows & Effects ─────────────────────────────────────────────────── */
+  --shadow-brutal: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  --shadow-glow-green: 0 0 20px rgba(0, 255, 65, 0.5);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME VARIABLES - LIGHT MODE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] {
+  /* ─── Core Brutalist Palette (Light) ────────────────────────────────────── */
+  --color-void: #f5f5f0;
+  --color-terminal: #ffffff;
+  --color-surface: #f0f0eb;
+  --color-grid: #e0e0db;
+  --color-border-harsh: #1a1a1a;
+  --color-text-raw: #0a0a0a;
+  --color-text-muted: #4a4a4a;
+  --color-text-dim: #8a8a8a;
+  
+  /* ─── Data Visualization Colors (Light - Adjusted for readability) ──────── */
+  --color-metric-positive: #16a34a;
+  --color-metric-negative: #dc2626;
+  --color-metric-neutral: #2563eb;
+  --color-metric-warning: #ca8a04;
+  
+  /* ─── Signal Colors Adjusted for Light Mode ─────────────────────────────── */
+  --color-signal-green: #00cc33;
+  --color-signal-red: #cc0044;
+  --color-signal-yellow: #cc9900;
+  --color-signal-cyan: #0099cc;
+  --color-signal-magenta: #cc00cc;
+  --color-signal-orange: #cc5500;
+  
+  /* ─── Adjusted Signal Colors for Light ──────────────────────────────────── */
+  --color-signal-green-bg: rgba(0, 204, 51, 0.1);
+  --color-signal-red-bg: rgba(204, 0, 68, 0.1);
+  --color-signal-yellow-bg: rgba(204, 153, 0, 0.1);
+  
+  /* ─── Shadows & Effects ─────────────────────────────────────────────────── */
+  --shadow-brutal: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  --shadow-glow-green: 0 0 20px rgba(0, 204, 51, 0.3);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 153, 204, 0.3);
+}
+
+/* System preference detection (when no explicit theme is set) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-void: #f5f5f0;
+    --color-terminal: #ffffff;
+    --color-surface: #f0f0eb;
+    --color-grid: #e0e0db;
+    --color-border-harsh: #1a1a1a;
+    --color-text-raw: #0a0a0a;
+    --color-text-muted: #4a4a4a;
+    --color-text-dim: #8a8a8a;
+    --color-metric-positive: #16a34a;
+    --color-metric-negative: #dc2626;
+    --color-metric-neutral: #2563eb;
+    --color-metric-warning: #ca8a04;
+    --color-signal-green: #00cc33;
+    --color-signal-red: #cc0044;
+    --color-signal-yellow: #cc9900;
+    --color-signal-cyan: #0099cc;
+    --color-signal-magenta: #cc00cc;
+    --color-signal-orange: #cc5500;
+    --shadow-brutal: 4px 4px 0 rgba(0, 0, 0, 0.2);
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-void);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-void);
+  color: var(--color-text-raw);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force monospace for all text by default */
+* {
+  font-family: inherit;
+}
+
+/* Force all elements to use dark theme colors as base */
+*,
+*::before,
+*::after {
+  border-color: var(--color-border-harsh);
+}
+
+/* Prevent any accidental white backgrounds */
+main,
+section,
+article,
+aside,
+nav,
+header,
+footer,
+div,
+form,
+fieldset {
+  background-color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Oversized Brutalist Headings */
+.heading-brutal {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 15vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.heading-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.heading-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Terminal-style text */
+.text-terminal {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.text-terminal::before {
+  content: '> ';
+  color: var(--color-signal-green);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HARSH GRID SYSTEM
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.grid-brutal {
+  display: grid;
+  gap: 0;
+  border: var(--border-brutal) solid var(--color-text-raw);
+}
+
+.grid-brutal > * {
+  border: var(--border-thin) solid var(--color-border-harsh);
+  padding: 1rem;
+}
+
+/* Asymmetric grid layouts */
+.layout-asymmetric {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0;
+}
+
+@media (max-width: 768px) {
+  .layout-asymmetric {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BRUTAL BORDERS & CONTAINERS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.border-brutal {
+  border: var(--border-brutal) solid var(--color-text-raw);
+}
+
+.border-harsh {
+  border: var(--border-harsh) solid var(--color-border-harsh);
+}
+
+.border-signal {
+  border: var(--border-brutal) solid var(--color-signal-green);
+}
+
+.border-warning {
+  border: var(--border-brutal) solid var(--color-signal-red);
+}
+
+/* Card with harsh edges - no rounded corners */
+.card-brutal {
+  background: var(--color-surface);
+  border: var(--border-harsh) solid var(--color-border-harsh);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.card-brutal::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid var(--color-border-harsh);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Terminal box */
+.terminal-box {
+  background: var(--color-terminal);
+  border: 2px solid var(--color-signal-green);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-box::before {
+  content: '●●●';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: var(--color-signal-green);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DATA BLOCKS & KPI DISPLAYS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.data-block {
+  background: var(--color-terminal);
+  border: 2px solid var(--color-grid);
+  padding: 1rem;
+  position: relative;
+}
+
+.data-block::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -0.75rem;
+  left: 0.5rem;
+  background: var(--color-terminal);
+  padding: 0 0.5rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.kpi-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 8vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.kpi-number.positive {
+  color: var(--color-metric-positive);
+}
+
+.kpi-number.negative {
+  color: var(--color-metric-negative);
+}
+
+.kpi-number.volatile {
+  animation: volatileNumber 2s ease-in-out infinite;
+}
+
+/* Sparkline placeholder */
+.sparkline-brutal {
+  height: 40px;
+  background: 
+    linear-gradient(90deg, 
+      transparent 0%, 
+      var(--color-signal-green) 10%,
+      transparent 15%,
+      var(--color-signal-green) 30%,
+      transparent 35%,
+      var(--color-signal-green) 55%,
+      transparent 60%,
+      var(--color-signal-green) 70%,
+      var(--color-signal-red) 75%,
+      transparent 80%,
+      var(--color-signal-green) 90%,
+      transparent 100%
+    );
+  background-size: 100% 2px;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  opacity: 0.8;
+}
+
+.sparkline-brutal::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-signal-green);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Raw metric display */
+.metric-raw {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-signal-green);
+}
+
+.metric-raw.warning {
+  border-left-color: var(--color-signal-yellow);
+}
+
+.metric-raw.danger {
+  border-left-color: var(--color-signal-red);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLITCH & CHAOS ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate(-2px, -2px);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(2px, 2px);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translate(2px, -2px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchText {
+  0% {
+    text-shadow: 2px 0 var(--color-glitch-1), -2px 0 var(--color-glitch-2);
+  }
+  25% {
+    text-shadow: -2px 0 var(--color-glitch-1), 2px 0 var(--color-glitch-2);
+  }
+  50% {
+    text-shadow: 2px 0 var(--color-glitch-2), -2px 0 var(--color-glitch-3);
+  }
+  75% {
+    text-shadow: -2px 0 var(--color-glitch-3), 2px 0 var(--color-glitch-1);
+  }
+  100% {
+    text-shadow: 2px 0 var(--color-glitch-1), -2px 0 var(--color-glitch-2);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+  75% { opacity: 0.9; }
+  90% { opacity: 0.7; }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  50% { 
+    opacity: 0.5;
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+@keyframes volatileNumber {
+  0%, 100% { 
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  25% { 
+    transform: translateY(-1px);
+    filter: blur(0.5px);
+  }
+  75% { 
+    transform: translateY(1px);
+    filter: blur(0.3px);
+  }
+}
+
+@keyframes dataStream {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes borderPulse {
+  0%, 100% { border-color: var(--color-border-harsh); }
+  50% { border-color: var(--color-signal-green); }
+}
+
+@keyframes textReveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Animation utility classes */
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out infinite;
+}
+
+.animate-glitch-text {
+  animation: glitchText 0.5s ease-in-out infinite;
+}
+
+.animate-flicker {
+  animation: flicker 3s ease-in-out infinite;
+}
+
+.animate-pulse-brutal {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-border-pulse {
+  animation: borderPulse 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-reveal {
+  animation: textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Staggered animation delays */
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation-delay: 0.4s; opacity: 0; }
+.stagger-5 { animation-delay: 0.5s; opacity: 0; }
+.stagger-6 { animation-delay: 0.6s; opacity: 0; }
+.stagger-7 { animation-delay: 0.7s; opacity: 0; }
+.stagger-8 { animation-delay: 0.8s; opacity: 0; }
+
+/* Hover glitch effect */
+.hover-glitch:hover {
+  animation: glitch 0.2s ease-in-out;
+}
+
+.hover-glitch-text:hover {
+  animation: glitchText 0.3s ease-in-out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCANLINE & CRT EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.scanline-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+.crt-effect {
+  position: relative;
+}
+
+.crt-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+  pointer-events: none;
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BACKGROUND PATTERNS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.bg-grid-pattern-dense {
+  background-image: 
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-dots-pattern {
+  background-image: radial-gradient(var(--color-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-diagonal-lines {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    var(--color-grid) 10px,
+    var(--color-grid) 11px
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-brutal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 3px solid var(--color-text-raw);
+  background: transparent;
+  color: var(--color-text-raw);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.btn-brutal:hover {
+  background: var(--color-text-raw);
+  color: var(--color-void);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--color-text-raw);
+}
+
+.btn-brutal:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+.btn-brutal-fill {
+  background: var(--color-text-raw);
+  color: var(--color-void);
+}
+
+.btn-brutal-fill:hover {
+  background: var(--color-signal-green);
+  border-color: var(--color-signal-green);
+  color: var(--color-void);
+}
+
+.btn-signal {
+  border-color: var(--color-signal-green);
+  color: var(--color-signal-green);
+}
+
+.btn-signal:hover {
+  background: var(--color-signal-green);
+  color: var(--color-void);
+}
+
+.btn-danger {
+  border-color: var(--color-signal-red);
+  color: var(--color-signal-red);
+}
+
+.btn-danger:hover {
+  background: var(--color-signal-red);
+  color: var(--color-void);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.input-brutal {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: var(--color-terminal);
+  border: 2px solid var(--color-border-harsh);
+  color: var(--color-text-raw);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input-brutal:focus {
+  border-color: var(--color-signal-green);
+  box-shadow: 0 0 0 1px var(--color-signal-green);
+}
+
+.input-brutal::placeholder {
+  color: var(--color-text-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BADGE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.badge-brutal {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 2px solid currentColor;
+}
+
+.badge-signal {
+  color: var(--color-signal-green);
+  border-color: var(--color-signal-green);
+}
+
+.badge-warning {
+  color: var(--color-signal-yellow);
+  border-color: var(--color-signal-yellow);
+}
+
+.badge-danger {
+  color: var(--color-signal-red);
+  border-color: var(--color-signal-red);
+}
+
+.badge-info {
+  color: var(--color-signal-cyan);
+  border-color: var(--color-signal-cyan);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE ELEMENT RESETS - DARK THEME
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* All tables default to dark theme */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--color-terminal);
+  color: var(--color-text-raw);
+}
+
+thead {
+  background: var(--color-surface);
+}
+
+th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border-harsh);
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-grid);
+  background: transparent;
+  color: var(--color-text-raw);
+}
+
+tr {
+  background: transparent;
+}
+
+tr:hover td {
+  background: var(--color-surface);
+}
+
+tbody {
+  background: var(--color-terminal);
+}
+
+/* All form elements default to dark theme */
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-mono);
+  background: var(--color-terminal);
+  color: var(--color-text-raw);
+  border: 1px solid var(--color-border-harsh);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-dim);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-signal-green);
+}
+
+select {
+  background: var(--color-terminal);
+  color: var(--color-text-raw);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+select option {
+  background: var(--color-terminal);
+  color: var(--color-text-raw);
+}
+
+/* Checkbox and radio styling */
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--color-terminal);
+  border: 2px solid var(--color-border-harsh);
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background: var(--color-signal-green);
+  border-color: var(--color-signal-green);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  display: block;
+  text-align: center;
+  color: var(--color-void);
+  font-size: 12px;
+  line-height: 12px;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+/* Remove default backgrounds from divs */
+div {
+  background-color: transparent;
+}
+
+/* Card-like containers should inherit dark theme */
+[class*="card"],
+[class*="Card"],
+[class*="panel"],
+[class*="Panel"],
+[class*="modal"],
+[class*="Modal"],
+[class*="dialog"],
+[class*="Dialog"],
+[class*="dropdown"],
+[class*="Dropdown"],
+[class*="popover"],
+[class*="Popover"],
+[class*="menu"],
+[class*="Menu"] {
+  background: var(--color-surface);
+  color: var(--color-text-raw);
+  border-color: var(--color-border-harsh);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TABLE STYLES (CLASS-BASED)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.table-brutal {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--color-terminal);
+}
+
+.table-brutal th {
+  text-align: left;
+  padding: 1rem;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border-harsh);
+}
+
+.table-brutal td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-grid);
+  background: transparent;
+}
+
+.table-brutal tr:hover td {
+  background: var(--color-surface);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-terminal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-harsh);
+  border: 1px solid var(--color-grid);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-signal-green);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SELECTION STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: var(--color-signal-green);
+  color: var(--color-void);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOCUS STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-green);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAILWIND OVERRIDES - FORCE DARK THEME
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Override common white/light backgrounds to dark theme equivalents */
+.bg-white {
+  background-color: var(--color-surface) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--color-terminal) !important;
+}
+
+.bg-gray-100 {
+  background-color: var(--color-surface) !important;
+}
+
+.bg-slate-50 {
+  background-color: var(--color-terminal) !important;
+}
+
+.bg-slate-100 {
+  background-color: var(--color-surface) !important;
+}
+
+/* Override light text colors */
+.text-gray-900 {
+  color: var(--color-text-raw) !important;
+}
+
+.text-gray-800 {
+  color: var(--color-text-raw) !important;
+}
+
+.text-gray-700 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-gray-600 {
+  color: var(--color-text-muted) !important;
+}
+
+.text-gray-500 {
+  color: var(--color-text-dim) !important;
+}
+
+.text-gray-400 {
+  color: var(--color-text-dim) !important;
+}
+
+/* Override border colors */
+.border-gray-100,
+.border-gray-200,
+.border-gray-300 {
+  border-color: var(--color-border-harsh) !important;
+}
+
+.divide-gray-100 > * + *,
+.divide-gray-200 > * + * {
+  border-color: var(--color-grid) !important;
+}
+
+/* Override shadows to be darker */
+.shadow-sm,
+.shadow,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.shadow-2xl {
+  --tw-shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Override rounded corners for brutalist feel (optional - uncomment if desired) */
+/*
+.rounded,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full {
+  border-radius: 0 !important;
+}
+*/
+
+/* Override ring colors */
+.ring-blue-500,
+.ring-blue-600 {
+  --tw-ring-color: var(--color-signal-green) !important;
+}
+
+.ring-offset-2 {
+  --tw-ring-offset-color: var(--color-void) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Text colors */
+.text-signal-green { color: var(--color-signal-green); }
+.text-signal-red { color: var(--color-signal-red); }
+.text-signal-yellow { color: var(--color-signal-yellow); }
+.text-signal-cyan { color: var(--color-signal-cyan); }
+.text-signal-magenta { color: var(--color-signal-magenta); }
+.text-muted { color: var(--color-text-muted); }
+.text-dim { color: var(--color-text-dim); }
+
+/* Background colors */
+.bg-void { background: var(--color-void); }
+.bg-terminal { background: var(--color-terminal); }
+.bg-surface { background: var(--color-surface); }
+
+/* Gradient text */
+.text-gradient-brutal {
+  background: linear-gradient(90deg, var(--color-signal-green), var(--color-signal-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Neon glow effects */
+.glow-green {
+  text-shadow: 0 0 10px var(--color-signal-green), 0 0 20px var(--color-signal-green);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 10px var(--color-signal-cyan), 0 0 20px var(--color-signal-cyan);
+}
+
+.glow-red {
+  text-shadow: 0 0 10px var(--color-signal-red), 0 0 20px var(--color-signal-red);
+}
+
+/* Box glow */
+.box-glow-green {
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+.box-glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+/* Broken/offset effect */
+.offset-shadow {
+  position: relative;
+}
+
+.offset-shadow::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid var(--color-signal-green);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .heading-brutal {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+  }
+  
+  .heading-xl {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+  
+  .heading-lg {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+  
+  .btn-brutal {
+    padding: 0.75rem 1.25rem;
+    font-size: 12px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PRINT STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .animate-glitch,
+  .animate-flicker,
+  .scanline-overlay::after {
+    animation: none;
+  }
 }

@@ -1,36 +1,164 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AdPilot - PPC Automation SaaS Platform
 
-## Getting Started
+> Worry-free PPC management in the AI era. Monitor, optimize, and safeguard your paid media accounts with always-on automation — while you stay in control.
 
-First, run the development server:
+## 🎯 Project Overview
+
+AdPilot is a B2B SaaS platform for paid media and PPC teams that:
+- **Automates** routine optimization tasks
+- **Protects** with guardrails (budget, bids, alerts)
+- **Analyzes** with deeper insights and reporting
+- **Serves** agencies, in-house teams, freelancers, and enterprises
+
+## 📁 Three-Layer Architecture
+
+This project is organized into three distinct conceptual layers:
+
+### 🌍 Outer World (`docs/outer-world/`)
+Business context, market positioning, and long-term strategy.
+- [Business Overview](docs/outer-world/business/README.md)
+- [Market Analysis](docs/outer-world/market/README.md)
+- [Strategy](docs/outer-world/strategy/README.md)
+
+### 🎨 Product Layer (`docs/product-layer/`)
+User experience, features, and the surface area where users interact.
+- [User Experience](docs/product-layer/user-experience/README.md)
+- [Features](docs/product-layer/features/README.md)
+- [Design System](docs/product-layer/design/README.md)
+
+### ⚙️ Technical Layer (`docs/technical-layer/`)
+Architecture, codebase organization, and implementation details.
+- [Architecture](docs/technical-layer/architecture/README.md)
+- [API Documentation](docs/technical-layer/api/README.md)
+- [Database Schema](docs/technical-layer/database/README.md)
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 20+
+- pnpm 10+
+- Docker (for local Supabase)
+
+### Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start local Supabase (Docker required)
+pnpm supabase:start
+
+# Run development server
 pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Copy environment template
+cp .env.example .env.local
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Configure your local Supabase credentials
+# (auto-generated when you run supabase:start)
+```
 
-## Learn More
+## 🧪 Testing
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Run unit tests
+pnpm test
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run unit tests in watch mode
+pnpm test:watch
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Run browser tests
+pnpm test:e2e
 
-## Deploy on Vercel
+# Run all tests
+pnpm test:all
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5.9 |
+| Styling | Tailwind CSS 4 |
+| Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth |
+| Deployment | Vercel |
+| Unit Testing | Vitest |
+| E2E Testing | Playwright |
+
+## 🗂️ Project Structure
+
+```
+ai-ad-machine/
+├── .cursor/              # Cursor AI skills & project context
+│   └── skills/           # Project-specific AI skills
+├── docs/                 # Three-layer documentation
+│   ├── outer-world/      # Business & strategy
+│   ├── product-layer/    # UX & features
+│   └── technical-layer/  # Architecture & code
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   ├── components/       # React components
+│   │   ├── ui/           # Base UI components
+│   │   ├── layout/       # Layout components
+│   │   ├── features/     # Feature-specific components
+│   │   └── forms/        # Form components
+│   ├── lib/              # Utilities & helpers
+│   │   ├── supabase/     # Supabase client & helpers
+│   │   ├── utils/        # General utilities
+│   │   └── hooks/        # Custom React hooks
+│   ├── types/            # TypeScript type definitions
+│   └── styles/           # Global styles
+├── supabase/             # Supabase configuration
+│   ├── migrations/       # Database migrations
+│   └── seed/             # Seed data
+├── tests/                # Test files
+│   ├── unit/             # Unit tests
+│   ├── browser/          # Playwright E2E tests
+│   └── fixtures/         # Test fixtures
+└── public/               # Static assets
+```
+
+## 🌐 Environments
+
+| Environment | Database | URL |
+|-------------|----------|-----|
+| Local | Docker Supabase | http://localhost:3000 |
+| Preview | Cloud Supabase (Preview) | Vercel Preview URL |
+| Production | Cloud Supabase (Prod) | adpilot.com |
+
+## 📜 Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm test         # Run unit tests
+pnpm test:e2e     # Run browser tests
+pnpm supabase:start   # Start local Supabase
+pnpm supabase:stop    # Stop local Supabase
+pnpm supabase:reset   # Reset local database
+pnpm db:migrate   # Run database migrations
+pnpm db:seed      # Seed database with test data
+```
+
+## 🤖 AI Agent Integration
+
+This project is designed for AI-assisted development:
+
+- **`.cursor/skills/`** - Project-specific AI skills that grow over time
+- **Three-layer docs** - Clear context for AI to understand business, product, and technical requirements
+- **Browser tests** - AI can run and validate user flows
+- **Unit tests** - AI can verify code correctness
+
+## 📄 License
+
+Private - All rights reserved.

@@ -1,0 +1,114 @@
+# AdPilot Project Rules
+
+## Project Overview
+
+AdPilot is a B2B SaaS PPC automation platform built with:
+- Next.js 16 (App Router)
+- React 19
+- TypeScript 5.9
+- Tailwind CSS 4
+- Supabase (PostgreSQL + Auth)
+- Vitest (unit tests)
+- Playwright (E2E tests)
+
+## Three-Layer Architecture
+
+### Outer World (Business Layer)
+Documentation in `docs/outer-world/`
+- Business model and value proposition
+- Market analysis and competitive landscape
+- Strategy and roadmap
+
+### Product Layer
+Documentation in `docs/product-layer/`
+- User experience and flows
+- Feature specifications
+- Design system
+
+### Technical Layer
+Documentation in `docs/technical-layer/`
+- Architecture decisions
+- API documentation
+- Database schema
+
+## Code Conventions
+
+### TypeScript
+- Use strict mode
+- Prefer interfaces for extendable types
+- Use `type` for unions and computed types
+- Avoid `any` - use `unknown` if needed
+- Always type function parameters and return values
+
+### React Components
+- Server Components by default (no 'use client')
+- Client Components only when needed for interactivity
+- Use forwardRef for UI components
+- Co-locate related files
+
+### File Naming
+- Components: PascalCase.tsx
+- Utilities: camelCase.ts
+- Types: types.ts or *.types.ts
+- Tests: *.test.ts or *.spec.ts
+
+### Imports
+- Use `@/*` alias for src imports
+- Group imports: external, internal, relative
+
+## Supabase
+
+### Local Development
+- Use Docker: `pnpm supabase:start`
+- Access Studio: http://localhost:54323
+- API Gateway: http://localhost:54321
+
+### Database
+- Always enable RLS on tables
+- Use migrations in `supabase/migrations/`
+- Generate types: `pnpm db:types`
+
+### Auth
+- Use `createServerClient` for Server Components
+- Use `createBrowserClient` for Client Components
+- Check auth in middleware for protected routes
+
+## Testing
+
+### Unit Tests (Vitest)
+- Location: `tests/unit/`
+- Run: `pnpm test`
+- Focus on pure functions and isolated components
+
+### Browser Tests (Playwright)
+- Location: `tests/browser/`
+- Run: `pnpm test:e2e`
+- Test critical user flows
+- Use page objects for complex pages
+
+## Common Commands
+
+```bash
+pnpm dev           # Start dev server
+pnpm build         # Production build
+pnpm test          # Unit tests
+pnpm test:e2e      # Browser tests
+pnpm supabase:start # Start local Supabase
+pnpm db:types      # Generate DB types
+```
+
+## When Making Changes
+
+1. Check relevant documentation in `docs/` first
+2. Follow existing patterns in the codebase
+3. Write tests for new functionality
+4. Update documentation if adding features
+5. Run `pnpm build` to verify before committing
+
+## Key Files
+
+- `src/lib/supabase/` - Supabase client configuration
+- `src/components/ui/` - Base UI components
+- `src/types/database.types.ts` - Database type definitions
+- `docs/` - Three-layer documentation
+
