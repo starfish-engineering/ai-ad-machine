@@ -30,8 +30,8 @@ export function DashboardHeader({ accountName, accountId }: DashboardHeaderProps
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-[var(--color-void)] border-b-2 border-[var(--color-border-harsh)]">
-        <div className="flex items-center justify-between h-14 px-6">
+      <header className="sticky top-0 z-20 bg-[var(--color-void)]/95 backdrop-blur-sm border-b-2 border-[var(--color-border-harsh)]">
+        <div className="flex items-center justify-between h-14 px-4 lg:px-6 pl-14 lg:pl-6">
           {/* Account Selector */}
           <button
             onClick={() => setShowAccountSelector(true)}

@@ -1,43 +1,41 @@
 'use client';
 
-import { useState } from 'react';
 import { Sidebar } from '@/components/layout/sidebar';
 import { DashboardHeader } from '@/components/layout/dashboard-header';
+import { SidebarProvider, useSidebar } from '@/components/layout/sidebar-context';
 import { Menu, X } from 'lucide-react';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+function DashboardContent({ children }: { children: React.ReactNode }) {
+  const { collapsed, mobileOpen, setMobileOpen } = useSidebar();
 
   return (
     <div className="min-h-screen bg-[var(--color-void)] bg-grid-pattern-dense">
       {/* Mobile sidebar backdrop */}
-      {sidebarOpen && (
+      {mobileOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/60 z-30 lg:hidden backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
         />
       )}
       
-      {/* Sidebar - hidden on mobile by default */}
+      {/* Sidebar - hidden on mobile by default, always visible on desktop */}
       <div className={`
-        fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 lg:translate-x-0
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        fixed inset-y-0 left-0 z-40 transform transition-transform duration-300 
+        lg:translate-x-0
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <Sidebar />
       </div>
       
-      {/* Main content */}
-      <div className="lg:pl-64 transition-all duration-300">
+      {/* Main content - padding adjusts based on sidebar collapsed state */}
+      <div className={`transition-all duration-300 ${collapsed ? 'lg:pl-16' : 'lg:pl-64'}`}>
         {/* Mobile menu button */}
         <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="fixed top-4 left-4 z-50 lg:hidden p-2 bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] text-[var(--color-text-raw)]"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="fixed top-4 left-4 z-50 lg:hidden p-2 bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] text-[var(--color-text-raw)] hover:border-[var(--color-signal-green)] hover:text-[var(--color-signal-green)] transition-colors"
+          aria-label="Toggle sidebar"
         >
-          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
         
         <DashboardHeader
@@ -47,5 +45,17 @@ export default function DashboardLayout({
         <main className="p-4 lg:p-6">{children}</main>
       </div>
     </div>
+  );
+}
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SidebarProvider>
+      <DashboardContent>{children}</DashboardContent>
+    </SidebarProvider>
   );
 }

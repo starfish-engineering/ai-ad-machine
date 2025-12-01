@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useSidebar } from './sidebar-context';
 import {
   LayoutDashboard,
   Users,
@@ -118,7 +119,7 @@ const navigation: NavItem[] = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const { collapsed, setCollapsed } = useSidebar();
   const [expandedItems, setExpandedItems] = useState<string[]>(['MONITOR', 'OPTIMIZE']);
 
   const toggleExpanded = (name: string) => {
