@@ -43,3 +43,7 @@ next-env.d.ts
 # Playwright MCP screenshots
 .playwright-mcp/
 .env*.local
+
+# Supabase local files
+supabase/.branches/
+supabase/.temp/

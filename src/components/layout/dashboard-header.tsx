@@ -5,11 +5,8 @@ import Link from 'next/link';
 import { Bell, Search, HelpCircle, Settings, ChevronDown, Cpu, X, ExternalLink } from 'lucide-react';
 import { Button, ThemeToggleCompact } from '@/components/ui';
 import { AccountSelector } from '@/components/features/account-selector';
-
-interface DashboardHeaderProps {
-  accountName?: string;
-  accountId?: string;
-}
+import { AccountTabs } from './account-tabs';
+import { useActiveAccount } from './account-tabs-context';
 
 // Sample notifications
 const notifications = [
@@ -18,7 +15,8 @@ const notifications = [
   { id: 3, type: 'info', message: 'Weekly report ready to download', time: '2h ago', read: true },
 ];
 
-export function DashboardHeader({ accountName, accountId }: DashboardHeaderProps) {
+export function DashboardHeader() {
+  const activeAccount = useActiveAccount();
   const [showAccountSelector, setShowAccountSelector] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -59,14 +57,16 @@ export function DashboardHeader({ accountName, accountId }: DashboardHeaderProps
             className="flex items-center gap-3 px-3 py-2 border border-[var(--color-border-harsh)] bg-[var(--color-terminal)] hover:border-[var(--color-signal-green)] transition-colors"
           >
             <div className="w-6 h-6 bg-[var(--color-surface)] border border-[var(--color-signal-green)] flex items-center justify-center">
-              <span className="text-[var(--color-signal-green)] text-[9px] font-mono font-bold">G</span>
+              <span className="text-[var(--color-signal-green)] text-[9px] font-mono font-bold">
+                {activeAccount ? activeAccount.platform.charAt(0).toUpperCase() : 'G'}
+              </span>
             </div>
             <div className="text-left hidden sm:block">
               <p className="text-[11px] font-mono font-bold text-[var(--color-text-raw)]">
-                {accountName || 'SELECT_ACCOUNT'}
+                {activeAccount?.name || 'SELECT_ACCOUNT'}
               </p>
-              {accountId && (
-                <p className="text-[9px] font-mono text-[var(--color-text-dim)]">{accountId}</p>
+              {activeAccount?.accountId && (
+                <p className="text-[9px] font-mono text-[var(--color-text-dim)]">{activeAccount.accountId}</p>
               )}
             </div>
             <ChevronDown className="w-3 h-3 text-[var(--color-text-muted)]" />
@@ -201,6 +201,8 @@ export function DashboardHeader({ accountName, accountId }: DashboardHeaderProps
             </div>
           </div>
         </div>
+        {/* Account Tabs Bar */}
+        <AccountTabs onAddAccount={() => setShowAccountSelector(true)} />
       </header>
 
       <AccountSelector open={showAccountSelector} onClose={() => setShowAccountSelector(false)} />

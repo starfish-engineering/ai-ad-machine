@@ -1,63 +1,103 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Search, Star, X, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Star, X, ChevronDown, Check, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface Account {
-  id: string;
-  name: string;
-  accountId: string;
-  platform: 'google' | 'meta' | 'amazon' | 'microsoft';
-  isFavorite: boolean;
-}
-
-// Demo accounts data
-const demoAccounts: Account[] = [
-  { id: '1', name: 'All American Housing Group', accountId: '966-043-4837', platform: 'google', isFavorite: false },
-  { id: '2', name: 'SolidOffers - Aspire', accountId: '304-879-7415', platform: 'google', isFavorite: true },
-  { id: '3', name: 'Hillcrest Home Solutions', accountId: '941-877-3186', platform: 'google', isFavorite: true },
-  { id: '4', name: 'Titan Home Solutions', accountId: '128-261-8691', platform: 'google', isFavorite: true },
-  { id: '5', name: 'Real Estate Rescue', accountId: '818-543-7686', platform: 'google', isFavorite: true },
-  { id: '6', name: 'Blue Line Home Solutions', accountId: '607-238-6225', platform: 'google', isFavorite: true },
-  { id: '7', name: 'Ironclad Equity Group', accountId: '771-275-8594', platform: 'google', isFavorite: false },
-  { id: '8', name: 'JTB Homebuyers', accountId: '813-672-1772', platform: 'google', isFavorite: false },
-];
+import { useAccountTabs, AccountTab } from '@/components/layout/account-tabs-context';
+import { createBrowserClient } from '@/lib/supabase/client';
+import { useWorkspace } from '@/lib/workspace';
+import type { AdAccount } from '@/types/database.types';
 
 const platformConfig: Record<string, { color: string; label: string }> = {
-  google: { color: 'var(--color-signal-green)', label: 'G' },
-  meta: { color: 'var(--color-signal-cyan)', label: 'M' },
-  amazon: { color: 'var(--color-signal-yellow)', label: 'A' },
-  microsoft: { color: 'var(--color-signal-magenta)', label: 'MS' },
+  google_ads: { color: 'var(--color-signal-green)', label: 'G' },
+  meta_ads: { color: 'var(--color-signal-cyan)', label: 'M' },
+  amazon_ads: { color: 'var(--color-signal-yellow)', label: 'A' },
+  microsoft_ads: { color: 'var(--color-signal-magenta)', label: 'MS' },
 };
 
 interface AccountSelectorProps {
   open: boolean;
   onClose: () => void;
-  onSelect?: (account: Account) => void;
+  onSelect?: (account: AccountTab) => void;
 }
 
 export function AccountSelector({ open, onClose, onSelect }: AccountSelectorProps) {
-  const router = useRouter();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'favorites'>('all');
+  const [accounts, setAccounts] = useState<AdAccount[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { tabs, addTab, activeTabId } = useAccountTabs();
+  const { workspaceId, isLoading: workspaceLoading } = useWorkspace();
+  const supabase = createBrowserClient();
+
+  useEffect(() => {
+    async function fetchAccounts() {
+      if (!workspaceId || !open) return;
+
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('ad_accounts')
+          .select('*')
+          .eq('workspace_id', workspaceId)
+          .order('is_favorite', { ascending: false })
+          .order('name', { ascending: true });
+
+        if (error) throw error;
+        setAccounts(data ?? []);
+      } catch (err) {
+        console.error('Error fetching accounts:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchAccounts();
+  }, [workspaceId, open, supabase]);
 
   if (!open) return null;
 
-  const filteredAccounts = demoAccounts.filter((account) => {
+  const openTabIds = new Set(tabs.map((t) => t.id));
+
+  const filteredAccounts = accounts.filter((account) => {
     const matchesSearch =
       account.name.toLowerCase().includes(search.toLowerCase()) ||
-      account.accountId.includes(search);
-    const matchesFilter = filter === 'all' || (filter === 'favorites' && account.isFavorite);
+      account.platform_account_id.includes(search);
+    const matchesFilter = filter === 'all' || (filter === 'favorites' && account.is_favorite);
     return matchesSearch && matchesFilter;
   });
 
-  const handleSelect = (account: Account) => {
-    onSelect?.(account);
+  const handleSelect = (account: AdAccount) => {
+    const tab: AccountTab = {
+      id: account.id,
+      name: account.name,
+      accountId: account.platform_account_id,
+      platform: account.platform as 'google' | 'meta' | 'amazon' | 'microsoft',
+    };
+    addTab(tab);
+    onSelect?.(tab);
     onClose();
-    // Navigate to the account detail page
-    router.push(`/dashboard/accounts/${account.id}`);
+  };
+
+  const handleToggleFavorite = async (accountId: string, currentFavorite: boolean, e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    // Optimistic update
+    setAccounts(prev => prev.map(a => 
+      a.id === accountId ? { ...a, is_favorite: !currentFavorite } : a
+    ));
+
+    const { error } = await supabase
+      .from('ad_accounts')
+      .update({ is_favorite: !currentFavorite })
+      .eq('id', accountId);
+
+    if (error) {
+      // Revert on error
+      setAccounts(prev => prev.map(a => 
+        a.id === accountId ? { ...a, is_favorite: currentFavorite } : a
+      ));
+    }
   };
 
   return (
@@ -108,21 +148,46 @@ export function AccountSelector({ open, onClose, onSelect }: AccountSelectorProp
           </div>
         </div>
 
+        {/* Open tabs indicator */}
+        {tabs.length > 0 && (
+          <div className="px-4 py-2 bg-[var(--color-surface)]/50 border-b border-[var(--color-grid)]">
+            <p className="text-[10px] font-mono text-[var(--color-text-dim)]">
+              <span className="text-[var(--color-signal-green)]">{tabs.length}</span> ACCOUNT{tabs.length !== 1 ? 'S' : ''} OPEN
+            </p>
+          </div>
+        )}
+
         {/* Account List */}
         <div className="max-h-80 overflow-y-auto">
-          {filteredAccounts.length === 0 ? (
+          {isLoading || workspaceLoading ? (
             <div className="p-8 text-center">
-              <p className="text-[11px] font-mono text-[var(--color-text-muted)]">NO_ACCOUNTS_FOUND</p>
+              <Loader2 className="w-6 h-6 text-[var(--color-signal-green)] animate-spin mx-auto mb-2" />
+              <p className="text-[11px] font-mono text-[var(--color-text-muted)]">LOADING_ACCOUNTS...</p>
+            </div>
+          ) : filteredAccounts.length === 0 ? (
+            <div className="p-8 text-center">
+              <p className="text-[11px] font-mono text-[var(--color-text-muted)]">
+                {accounts.length === 0 ? 'NO_ACCOUNTS_IN_WORKSPACE' : 'NO_ACCOUNTS_FOUND'}
+              </p>
             </div>
           ) : (
             <ul>
               {filteredAccounts.map((account) => {
-                const platform = platformConfig[account.platform];
+                // Map platform to expected format
+                const platformKey = account.platform.replace('_ads', '') as 'google' | 'meta' | 'amazon' | 'microsoft';
+                const platform = platformConfig[account.platform] ?? platformConfig.google_ads;
+                const isOpen = openTabIds.has(account.id);
+                const isActive = account.id === activeTabId;
+                const isFavorite = account.is_favorite ?? false;
+                
                 return (
                   <li key={account.id} className="border-b border-[var(--color-grid)] last:border-b-0">
                     <button
                       onClick={() => handleSelect(account)}
-                      className="w-full flex items-center justify-between px-4 py-3 hover:bg-[var(--color-surface)] transition-colors group"
+                      className={cn(
+                        'w-full flex items-center justify-between px-4 py-3 transition-colors group',
+                        isActive ? 'bg-[var(--color-signal-green)]/10' : isOpen ? 'bg-[var(--color-signal-cyan)]/5' : 'hover:bg-[var(--color-surface)]'
+                      )}
                     >
                       <div className="flex items-center gap-3">
                         <div
@@ -137,20 +202,27 @@ export function AccountSelector({ open, onClose, onSelect }: AccountSelectorProp
                           </span>
                         </div>
                         <div className="text-left">
-                          <p className="text-[11px] font-mono font-bold text-[var(--color-text-raw)] group-hover:text-[var(--color-signal-green)]">
+                          <p className="text-[11px] font-mono font-bold text-[var(--color-text-raw)] group-hover:text-[var(--color-signal-green)] flex items-center gap-2">
                             {account.name}
+                            {isOpen && (
+                              <span className={cn('inline-flex items-center gap-1 px-1.5 py-0.5 text-[8px] font-mono font-bold border',
+                                isActive ? 'border-[var(--color-signal-green)] text-[var(--color-signal-green)]' : 'border-[var(--color-signal-cyan)] text-[var(--color-signal-cyan)]')}>
+                                {isActive ? <><Check className="w-2.5 h-2.5" />ACTIVE</> : 'OPEN'}
+                              </span>
+                            )}
                           </p>
                           <p className="text-[9px] font-mono text-[var(--color-text-dim)]">
-                            {account.accountId}
+                            {account.platform_account_id}
                           </p>
                         </div>
                       </div>
                       <Star
+                        onClick={(e) => handleToggleFavorite(account.id, isFavorite, e)}
                         className={cn(
-                          'w-4 h-4 transition-colors',
-                          account.isFavorite
+                          'w-4 h-4 transition-colors cursor-pointer',
+                          isFavorite
                             ? 'text-[var(--color-signal-yellow)] fill-[var(--color-signal-yellow)]'
-                            : 'text-[var(--color-text-dim)]'
+                            : 'text-[var(--color-text-dim)] hover:text-[var(--color-signal-yellow)]'
                         )}
                       />
                     </button>

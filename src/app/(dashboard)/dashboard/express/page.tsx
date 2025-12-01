@@ -1,299 +1,479 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { Button, Badge, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import {
   ChevronDown,
   ChevronRight,
-  Check,
   Clock,
   Flame,
   CheckCircle,
   XCircle,
   Pause,
+  Loader2,
+  AlertTriangle,
+  RefreshCw,
+  Lightbulb,
 } from 'lucide-react';
+import { createBrowserClient } from '@/lib/supabase/client';
+import { useWorkspace } from '@/lib/workspace';
+import type { Suggestion, AdAccount, NegativeKeywordConflict } from '@/types/database.types';
 
-// Mock suggestions data
-const suggestions = [
-  {
-    id: '1',
-    type: 'Fix Conflicting Negative Keywords',
-    account: '021 - Palmetto Purchases',
-    accountId: '607-238-6225',
-    count: 5,
-    items: [
-      { negativeKeyword: '"realtor"', source: 'Shared List', keyword: '[best way to sell your house without a realtor]', campaign: 'PPCL - South Carolina', adGroup: 'Without A Realtor (EM)' },
-      { negativeKeyword: '"avoid foreclosure"', source: 'Shared List', keyword: '"sell house to avoid foreclosure"', campaign: 'PPCL - South Carolina', adGroup: 'Foreclosure (PM)' },
-      { negativeKeyword: '"work"', source: 'Shared List', keyword: '[sell house that needs work]', campaign: 'PPCL - South Carolina', adGroup: 'As-Is (EM)' },
-      { negativeKeyword: '[we buy ugly houses]', source: 'Shared List', keyword: '[we buy ugly houses]', campaign: 'PPCL - South Carolina', adGroup: 'We Buy [Ugly] Houses (EM)' },
-      { negativeKeyword: '"avoid foreclosure"', source: 'Shared List', keyword: '[avoid foreclosure by selling]', campaign: 'PPCL - South Carolina', adGroup: 'Foreclosure (EM)' },
-    ],
-  },
-  {
-    id: '2',
-    type: 'Fix Impression Share Lost Due To Budget - Campaign Budget',
-    account: '018 - All American Housing Group',
-    count: 3,
-  },
-  {
-    id: '3',
-    type: 'Fix Impression Share Lost Due To Budget - Campaign Budget',
-    account: '025 - Real Estate Rescue',
-    count: 2,
-  },
-  {
-    id: '4',
-    type: 'Fix Impression Share Lost Due To Budget - Campaign Budget',
-    account: '026 - JTB Homebuyers',
-    count: 1,
-  },
-  {
-    id: '5',
-    type: 'Fix Impression Share Lost Due To Budget - Campaign Budget',
-    account: '024 - K&D Holdings',
-    count: 2,
-  },
-  {
-    id: '6',
-    type: 'Fix Conflicting Negative Keywords',
-    account: '024 - K&D Holdings',
-    count: 3,
-  },
-  {
-    id: '7',
-    type: 'Fix Conflicting Negative Keywords',
-    account: '001 - Blue Line Home Solutions',
-    count: 4,
-  },
-  {
-    id: '8',
-    type: 'Add New Keywords',
-    account: '019 - SolidOffers - Aspire',
-    count: 12,
-  },
-];
+interface SuggestionWithRelations extends Suggestion {
+  ad_account: AdAccount | null;
+  negative_keyword_conflicts?: NegativeKeywordConflict[];
+}
+
+interface GroupedSuggestion {
+  type: string;
+  account: string;
+  accountId: string;
+  adAccountId: string;
+  count: number;
+  suggestions: SuggestionWithRelations[];
+}
 
 export default function ExpressOptimizations() {
-  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>('1');
-  const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set([0, 1, 2, 3, 4]));
+  const { workspace, workspaceId, isLoading: workspaceLoading } = useWorkspace();
+  const [suggestions, setSuggestions] = useState<SuggestionWithRelations[]>([]);
+  const [conflicts, setConflicts] = useState<NegativeKeywordConflict[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const supabase = createBrowserClient();
 
-  const currentSuggestion = suggestions.find((s) => s.id === selectedSuggestion);
+  useEffect(() => {
+    async function fetchSuggestions() {
+      if (!workspaceId) {
+        setSuggestions([]);
+        setIsLoading(false);
+        return;
+      }
 
-  const toggleItem = (index: number) => {
-    const newSelected = new Set(selectedItems);
-    if (newSelected.has(index)) {
-      newSelected.delete(index);
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        // Get ad accounts for this workspace first
+        const { data: accounts, error: accountsError } = await supabase
+          .from('ad_accounts')
+          .select('id')
+          .eq('workspace_id', workspaceId);
+
+        if (accountsError) throw accountsError;
+        
+        const accountIds = accounts?.map(a => a.id) ?? [];
+        
+        if (accountIds.length === 0) {
+          setSuggestions([]);
+          setIsLoading(false);
+          return;
+        }
+
+        // Fetch suggestions for these accounts
+        const { data: suggestionsData, error: suggestionsError } = await supabase
+          .from('suggestions')
+          .select(`
+            *,
+            ad_account:ad_accounts (*)
+          `)
+          .in('ad_account_id', accountIds)
+          .eq('status', 'pending')
+          .order('priority', { ascending: true })
+          .order('created_at', { ascending: false });
+
+        if (suggestionsError) throw suggestionsError;
+        setSuggestions((suggestionsData as SuggestionWithRelations[]) ?? []);
+
+        // Fetch negative keyword conflicts
+        const { data: conflictsData, error: conflictsError } = await supabase
+          .from('negative_keyword_conflicts')
+          .select('*')
+          .in('ad_account_id', accountIds)
+          .eq('status', 'pending');
+
+        if (conflictsError) throw conflictsError;
+        setConflicts(conflictsData ?? []);
+
+        // Select first group by default
+        if (suggestionsData && suggestionsData.length > 0) {
+          const first = suggestionsData[0];
+          setSelectedGroup(`${first.type}-${first.ad_account_id}`);
+          
+          // Select all items in the first group by default
+          const firstGroupConflicts = conflictsData?.filter(c => c.suggestion_id === first.id) ?? [];
+          setSelectedItems(new Set(firstGroupConflicts.map(c => c.id)));
+        }
+
+      } catch (err) {
+        console.error('Error fetching suggestions:', err);
+        setError('Failed to load suggestions');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (!workspaceLoading) {
+      fetchSuggestions();
+    }
+  }, [workspaceId, workspaceLoading, supabase]);
+
+  // Group suggestions by type and account
+  const groupedSuggestions: GroupedSuggestion[] = suggestions.reduce((acc, suggestion) => {
+    const key = `${suggestion.type}-${suggestion.ad_account_id}`;
+    const existing = acc.find(g => `${g.type}-${g.adAccountId}` === key);
+    
+    if (existing) {
+      existing.suggestions.push(suggestion);
+      existing.count++;
     } else {
-      newSelected.add(index);
+      acc.push({
+        type: suggestion.type,
+        account: suggestion.ad_account?.name ?? 'Unknown Account',
+        accountId: suggestion.ad_account?.platform_account_id ?? '',
+        adAccountId: suggestion.ad_account_id,
+        count: 1,
+        suggestions: [suggestion],
+      });
+    }
+    
+    return acc;
+  }, [] as GroupedSuggestion[]);
+
+  const currentGroup = groupedSuggestions.find(g => `${g.type}-${g.adAccountId}` === selectedGroup);
+  const currentSuggestion = currentGroup?.suggestions[0];
+  const currentConflicts = currentSuggestion 
+    ? conflicts.filter(c => c.suggestion_id === currentSuggestion.id)
+    : [];
+
+  const toggleItem = (conflictId: string) => {
+    const newSelected = new Set(selectedItems);
+    if (newSelected.has(conflictId)) {
+      newSelected.delete(conflictId);
+    } else {
+      newSelected.add(conflictId);
     }
     setSelectedItems(newSelected);
   };
 
   const toggleAll = () => {
-    if (currentSuggestion?.items) {
-      if (selectedItems.size === currentSuggestion.items.length) {
-        setSelectedItems(new Set());
-      } else {
-        setSelectedItems(new Set(currentSuggestion.items.map((_, i) => i)));
-      }
+    if (selectedItems.size === currentConflicts.length) {
+      setSelectedItems(new Set());
+    } else {
+      setSelectedItems(new Set(currentConflicts.map(c => c.id)));
     }
   };
+
+  const handleApplySuggestion = async () => {
+    if (!currentSuggestion || selectedItems.size === 0) return;
+
+    // Update selected conflicts as resolved
+    const { error: conflictError } = await supabase
+      .from('negative_keyword_conflicts')
+      .update({ status: 'resolved', resolved_at: new Date().toISOString() })
+      .in('id', Array.from(selectedItems));
+
+    if (conflictError) {
+      console.error('Error resolving conflicts:', conflictError);
+      return;
+    }
+
+    // Update suggestion status if all conflicts resolved
+    const remainingConflicts = currentConflicts.filter(c => !selectedItems.has(c.id));
+    if (remainingConflicts.length === 0) {
+      await supabase
+        .from('suggestions')
+        .update({ status: 'applied', applied_at: new Date().toISOString() })
+        .eq('id', currentSuggestion.id);
+    }
+
+    // Refresh data
+    setConflicts(prev => prev.filter(c => !selectedItems.has(c.id)));
+    setSelectedItems(new Set());
+  };
+
+  const formatSuggestionType = (type: string): string => {
+    return type.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
+
+  if (workspaceLoading || isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 text-[var(--color-signal-green)] animate-spin mx-auto mb-4" />
+          <p className="text-[11px] font-mono text-[var(--color-text-muted)]">LOADING_SUGGESTIONS...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!workspace) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <AlertTriangle className="w-8 h-8 text-[var(--color-signal-yellow)] mx-auto mb-4" />
+          <p className="text-[11px] font-mono text-[var(--color-text-muted)]">NO_WORKSPACE_SELECTED</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <AlertTriangle className="w-8 h-8 text-[var(--color-signal-red)] mx-auto mb-4" />
+          <p className="text-[11px] font-mono text-[var(--color-text-muted)]">{error.toUpperCase().replace(/ /g, '_')}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-[var(--color-surface)] border border-[var(--color-border-harsh)] text-[10px] font-mono text-[var(--color-text-muted)] hover:border-[var(--color-signal-green)] hover:text-[var(--color-signal-green)] flex items-center gap-2 mx-auto"
+          >
+            <RefreshCw className="w-3 h-3" />
+            RETRY
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">AdPilot Express</h1>
-          <p className="text-gray-600">
-            Get one-click PPC suggestions to optimize different aspects of your campaigns in one place
+          <h1 className="font-display text-2xl text-[var(--color-text-raw)]">ADPILOT_EXPRESS</h1>
+          <p className="text-xs font-mono text-[var(--color-text-muted)]">
+            &gt; {workspace.name.toUpperCase().replace(/ /g, '_')} • One-click optimizations for your campaigns
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm">
-            <Flame className="w-4 h-4 text-orange-500" />
-            <span className="font-medium">1 day streak!</span>
+          <div className="flex items-center gap-2 text-[10px] font-mono">
+            <Flame className="w-4 h-4 text-[var(--color-signal-yellow)]" />
+            <span className="text-[var(--color-text-muted)]">1 day streak!</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-[10px] font-mono text-[var(--color-text-dim)]">
             <CheckCircle className="w-4 h-4" />
-            <span><strong>1</strong> Suggestions Reviewed Today</span>
+            <span><span className="text-[var(--color-text-raw)] font-bold">1</span> Reviewed Today</span>
           </div>
-          <Button variant="outline">
-            Enable Suggestions (1)
-          </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
-        {/* Left Panel - Suggestions List */}
-        <div className="col-span-12 lg:col-span-4">
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            {/* Filters */}
-            <div className="p-4 border-b border-gray-200 space-y-3">
-              <button className="flex items-center justify-between w-full px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50">
-                <span className="flex items-center gap-2">
-                  <span className="w-5 h-5 bg-gray-200 rounded flex items-center justify-center text-xs">👥</span>
-                  All Accounts
-                </span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <button className="flex items-center justify-between w-full px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50">
-                <span className="flex items-center gap-2">
-                  <span className="w-5 h-5 bg-gray-200 rounded flex items-center justify-center text-xs">💡</span>
-                  All Suggestion Types
-                </span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Suggestions List */}
-            <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-              {suggestions.map((suggestion) => (
-                <button
-                  key={suggestion.id}
-                  onClick={() => setSelectedSuggestion(suggestion.id)}
-                  className={cn(
-                    'w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors',
-                    selectedSuggestion === suggestion.id && 'bg-blue-50 border-l-4 border-blue-600'
-                  )}
-                >
-                  <p className="text-sm font-medium text-gray-900">{suggestion.type}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="w-4 h-4 rounded bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                      <span className="text-white text-[8px] font-bold">G</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{suggestion.account}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+      {groupedSuggestions.length === 0 ? (
+        <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] p-12 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 border-2 border-[var(--color-signal-green)] flex items-center justify-center">
+            <CheckCircle className="w-8 h-8 text-[var(--color-signal-green)]" />
           </div>
+          <h3 className="text-sm font-mono font-bold text-[var(--color-text-raw)] mb-2">ALL_CAUGHT_UP!</h3>
+          <p className="text-[10px] font-mono text-[var(--color-text-muted)]">
+            No pending optimization suggestions at this time
+          </p>
         </div>
-
-        {/* Right Panel - Suggestion Detail */}
-        <div className="col-span-12 lg:col-span-8">
-          {selectedSuggestion && currentSuggestion ? (
-            <div className="bg-white rounded-lg border border-gray-200">
-              {/* Header */}
-              <div className="p-6 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                  {currentSuggestion.type}
-                </h2>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-5 h-5 rounded bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                    <span className="text-white text-[10px] font-bold">G</span>
-                  </div>
-                  <span className="text-sm text-gray-600">
-                    {currentSuggestion.account}
-                    {currentSuggestion.accountId && ` (${currentSuggestion.accountId})`}
+      ) : (
+        <div className="grid grid-cols-12 gap-6">
+          {/* Left Panel - Suggestions List */}
+          <div className="col-span-12 lg:col-span-4">
+            <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] overflow-hidden">
+              {/* Filters */}
+              <div className="p-4 border-b-2 border-[var(--color-border-harsh)] space-y-3">
+                <button className="flex items-center justify-between w-full px-3 py-2 border border-[var(--color-border-harsh)] bg-[var(--color-surface)] text-[10px] font-mono text-[var(--color-text-raw)] hover:border-[var(--color-signal-green)]">
+                  <span className="flex items-center gap-2">
+                    <span className="text-[var(--color-text-dim)]">👥</span>
+                    ALL_ACCOUNTS
                   </span>
-                </div>
-                <p className="text-sm text-gray-600">
-                  Negative keywords can sometimes conflict with some keywords and restrict the traffic from search queries that match these keywords.{' '}
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Read more about how negative conflicts work here
-                  </a>.
-                </p>
-                <div className="flex items-start gap-2 mt-4 p-3 bg-blue-50 rounded-lg">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-blue-600 text-xs">💡</span>
-                  </div>
-                  <p className="text-sm text-gray-700">
-                    Resolve these conflicts in one of two ways: 1. Remove the negative keyword that is conflicting so ads can show for keywords that were being blocked by them 2. Pause keywords if you no longer show ads for them.
-                  </p>
-                </div>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+                <button className="flex items-center justify-between w-full px-3 py-2 border border-[var(--color-border-harsh)] bg-[var(--color-surface)] text-[10px] font-mono text-[var(--color-text-raw)] hover:border-[var(--color-signal-green)]">
+                  <span className="flex items-center gap-2">
+                    <span className="text-[var(--color-text-dim)]">💡</span>
+                    ALL_SUGGESTION_TYPES
+                  </span>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
               </div>
 
-              {/* Table */}
-              {currentSuggestion.items && (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gray-50 border-b border-gray-200">
-                        <th className="px-4 py-3 text-left">
-                          <input
-                            type="checkbox"
-                            checked={selectedItems.size === currentSuggestion.items.length}
-                            onChange={toggleAll}
-                            className="rounded border-gray-300"
-                          />
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          {selectedItems.size}/{currentSuggestion.items.length}
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Negative Keyword
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Keyword Source
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Keyword
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Campaign
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Ad Group
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {currentSuggestion.items.map((item, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="px-4 py-3">
+              {/* Suggestions List */}
+              <div className="max-h-[600px] overflow-y-auto">
+                {groupedSuggestions.map((group) => {
+                  const key = `${group.type}-${group.adAccountId}`;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setSelectedGroup(key);
+                        const groupConflicts = conflicts.filter(c => 
+                          group.suggestions.some(s => s.id === c.suggestion_id)
+                        );
+                        setSelectedItems(new Set(groupConflicts.map(c => c.id)));
+                      }}
+                      className={cn(
+                        'w-full px-4 py-3 text-left transition-colors border-b border-[var(--color-grid)]',
+                        selectedGroup === key 
+                          ? 'bg-[var(--color-signal-green)]/10 border-l-2 border-l-[var(--color-signal-green)]' 
+                          : 'hover:bg-[var(--color-surface)]'
+                      )}
+                    >
+                      <p className="text-[11px] font-mono font-bold text-[var(--color-text-raw)]">
+                        {formatSuggestionType(group.type)}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="w-4 h-4 bg-[var(--color-signal-green)] flex items-center justify-center">
+                          <span className="text-[var(--color-void)] text-[8px] font-mono font-bold">G</span>
+                        </div>
+                        <span className="text-[9px] font-mono text-[var(--color-text-dim)]">
+                          {group.account} {group.accountId && `(${group.accountId})`}
+                        </span>
+                      </div>
+                      <span className="text-[8px] font-mono text-[var(--color-signal-cyan)] mt-1 block">
+                        {group.count} suggestion{group.count !== 1 ? 's' : ''}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Panel - Suggestion Detail */}
+          <div className="col-span-12 lg:col-span-8">
+            {currentGroup && currentSuggestion ? (
+              <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)]">
+                {/* Header */}
+                <div className="p-6 border-b-2 border-[var(--color-border-harsh)]">
+                  <h2 className="text-sm font-mono font-bold text-[var(--color-text-raw)] mb-2">
+                    {formatSuggestionType(currentSuggestion.type)}
+                  </h2>
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-5 h-5 bg-[var(--color-signal-green)] flex items-center justify-center">
+                      <span className="text-[var(--color-void)] text-[10px] font-mono font-bold">G</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                      {currentGroup.account}
+                      {currentGroup.accountId && ` (${currentGroup.accountId})`}
+                    </span>
+                  </div>
+                  {currentSuggestion.description && (
+                    <p className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                      {currentSuggestion.description}
+                    </p>
+                  )}
+                  {currentSuggestion.impact_estimate && (
+                    <div className="flex items-start gap-2 mt-4 p-3 bg-[var(--color-signal-green)]/10 border border-[var(--color-signal-green)]/30">
+                      <Lightbulb className="w-4 h-4 text-[var(--color-signal-green)] flex-shrink-0 mt-0.5" />
+                      <p className="text-[10px] font-mono text-[var(--color-signal-green)]">
+                        <span className="font-bold">IMPACT:</span> {currentSuggestion.impact_estimate}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Table for negative keyword conflicts */}
+                {currentConflicts.length > 0 && (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-[var(--color-surface)] border-b-2 border-[var(--color-border-harsh)]">
+                          <th className="px-4 py-3 text-left">
                             <input
                               type="checkbox"
-                              checked={selectedItems.has(index)}
-                              onChange={() => toggleItem(index)}
-                              className="rounded border-gray-300"
+                              checked={selectedItems.size === currentConflicts.length}
+                              onChange={toggleAll}
+                              className="border-[var(--color-border-harsh)] bg-[var(--color-terminal)]"
                             />
-                          </td>
-                          <td className="px-4 py-3"></td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{item.negativeKeyword}</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">{item.source}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{item.keyword}</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">{item.campaign}</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">{item.adGroup}</td>
+                          </th>
+                          <th className="px-4 py-3 text-left text-[8px] font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                            {selectedItems.size}/{currentConflicts.length}
+                          </th>
+                          <th className="px-4 py-3 text-left text-[8px] font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                            NEGATIVE_KEYWORD
+                          </th>
+                          <th className="px-4 py-3 text-left text-[8px] font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                            SOURCE
+                          </th>
+                          <th className="px-4 py-3 text-left text-[8px] font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                            CONFLICTING_KEYWORD
+                          </th>
+                          <th className="px-4 py-3 text-left text-[8px] font-mono font-bold text-[var(--color-text-muted)] uppercase tracking-wider">
+                            CAMPAIGN
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                      </thead>
+                      <tbody className="divide-y divide-[var(--color-grid)]">
+                        {currentConflicts.map((conflict) => (
+                          <tr key={conflict.id} className="hover:bg-[var(--color-surface)]">
+                            <td className="px-4 py-3">
+                              <input
+                                type="checkbox"
+                                checked={selectedItems.has(conflict.id)}
+                                onChange={() => toggleItem(conflict.id)}
+                                className="border-[var(--color-border-harsh)] bg-[var(--color-terminal)]"
+                              />
+                            </td>
+                            <td className="px-4 py-3"></td>
+                            <td className="px-4 py-3 text-[10px] font-mono text-[var(--color-signal-red)]">
+                              {conflict.negative_keyword}
+                            </td>
+                            <td className="px-4 py-3 text-[10px] font-mono text-[var(--color-text-dim)]">
+                              {conflict.negative_source ?? 'Unknown'}
+                            </td>
+                            <td className="px-4 py-3 text-[10px] font-mono text-[var(--color-text-raw)]">
+                              {conflict.conflicting_keyword}
+                            </td>
+                            <td className="px-4 py-3 text-[10px] font-mono text-[var(--color-text-dim)]">
+                              {conflict.campaign_name ?? '-'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
-              {/* Actions */}
-              <div className="p-4 border-t border-gray-200 flex items-center justify-center gap-3">
-                <Button variant="outline" className="gap-2">
-                  <Clock className="w-4 h-4" />
-                  Snooze
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-                <Button className="bg-blue-600 hover:bg-blue-700 gap-2">
-                  <Pause className="w-4 h-4" />
-                  Pause Keywords
-                </Button>
-                <Button className="bg-pink-600 hover:bg-pink-700 gap-2">
-                  <XCircle className="w-4 h-4" />
-                  Remove Negative Keywords
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-white rounded-lg border border-gray-200 h-full flex items-center justify-center py-20">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-12 h-12 text-blue-500" />
+                {/* No conflicts state */}
+                {currentConflicts.length === 0 && (
+                  <div className="p-8 text-center">
+                    <p className="text-[10px] font-mono text-[var(--color-text-dim)]">
+                      No detailed items for this suggestion type
+                    </p>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="p-4 border-t-2 border-[var(--color-border-harsh)] flex items-center justify-center gap-3">
+                  <button className="px-4 py-2 border border-[var(--color-border-harsh)] text-[10px] font-mono text-[var(--color-text-muted)] hover:border-[var(--color-text-muted)] flex items-center gap-2">
+                    <Clock className="w-3 h-3" />
+                    SNOOZE
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                  <button className="px-4 py-2 bg-[var(--color-signal-cyan)] text-[var(--color-void)] text-[10px] font-mono font-bold hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] flex items-center gap-2">
+                    <Pause className="w-3 h-3" />
+                    PAUSE_KEYWORDS
+                  </button>
+                  <button 
+                    onClick={handleApplySuggestion}
+                    disabled={selectedItems.size === 0}
+                    className="px-4 py-2 bg-[var(--color-signal-green)] text-[var(--color-void)] text-[10px] font-mono font-bold hover:shadow-[0_0_20px_rgba(0,255,65,0.3)] flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <XCircle className="w-3 h-3" />
+                    REMOVE_NEGATIVES
+                  </button>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Welcome to AdPilot Express</h3>
-                <p className="text-gray-500">Select a suggestion from left to get started</p>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] h-full flex items-center justify-center py-20">
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-[var(--color-signal-cyan)] flex items-center justify-center">
+                    <CheckCircle className="w-8 h-8 text-[var(--color-signal-cyan)]" />
+                  </div>
+                  <h3 className="text-sm font-mono font-bold text-[var(--color-text-raw)] mb-2">WELCOME_TO_EXPRESS</h3>
+                  <p className="text-[10px] font-mono text-[var(--color-text-dim)]">Select a suggestion to get started</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
-

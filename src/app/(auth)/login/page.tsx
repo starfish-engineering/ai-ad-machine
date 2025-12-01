@@ -43,9 +43,31 @@ function LoginForm() {
     }
   };
 
-  // For demo purposes, allow bypassing auth
-  const handleDemoLogin = () => {
-    router.push('/dashboard');
+  // For demo purposes, sign in with demo credentials
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const supabase = createBrowserClient();
+      const { error } = await supabase.auth.signInWithPassword({
+        email: 'demo@adpilot.io',
+        password: 'demo1234',
+      });
+
+      if (error) {
+        // If demo login fails, still allow access in demo mode
+        console.warn('Demo login failed:', error.message);
+        setError('Demo account not configured. Please contact admin.');
+      } else {
+        router.push('/dashboard');
+        router.refresh();
+      }
+    } catch {
+      setError('Demo login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

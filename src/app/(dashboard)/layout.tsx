@@ -3,6 +3,8 @@
 import { Sidebar } from '@/components/layout/sidebar';
 import { DashboardHeader } from '@/components/layout/dashboard-header';
 import { SidebarProvider, useSidebar } from '@/components/layout/sidebar-context';
+import { AccountTabsProvider } from '@/components/layout/account-tabs-context';
+import { WorkspaceProvider } from '@/lib/workspace';
 import { Menu, X } from 'lucide-react';
 
 function DashboardContent({ children }: { children: React.ReactNode }) {
@@ -34,10 +36,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
         
-        <DashboardHeader
-          accountName="Titan Home Solutions"
-          accountId="966-043-4837"
-        />
+        <DashboardHeader />
         <main className="p-4 lg:p-6">{children}</main>
       </div>
     </div>
@@ -50,8 +49,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <DashboardContent>{children}</DashboardContent>
-    </SidebarProvider>
+    <WorkspaceProvider>
+      <AccountTabsProvider>
+        <SidebarProvider>
+          <DashboardContent>{children}</DashboardContent>
+        </SidebarProvider>
+      </AccountTabsProvider>
+    </WorkspaceProvider>
   );
 }
