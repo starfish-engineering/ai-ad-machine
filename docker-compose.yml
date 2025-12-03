@@ -7,7 +7,7 @@ services:
   # PostgreSQL Database
   db:
     image: supabase/postgres:15.6.1.143
-    container_name: adpilot-db
+    container_name: draper-db
     ports:
       - "54322:5432"
     environment:
@@ -29,14 +29,14 @@ services:
   # Supabase Studio (Database UI)
   studio:
     image: supabase/studio:20241202-71e5240
-    container_name: adpilot-studio
+    container_name: draper-studio
     ports:
       - "54323:3000"
     environment:
       STUDIO_PG_META_URL: http://meta:8080
       POSTGRES_PASSWORD: postgres
-      DEFAULT_ORGANIZATION_NAME: AdPilot
-      DEFAULT_PROJECT_NAME: AdPilot Local
+      DEFAULT_ORGANIZATION_NAME: Draper
+      DEFAULT_PROJECT_NAME: Draper Local
       SUPABASE_URL: http://kong:8000
       SUPABASE_PUBLIC_URL: http://localhost:54321
       SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
@@ -49,7 +49,7 @@ services:
   # Kong API Gateway
   kong:
     image: kong:3.8
-    container_name: adpilot-kong
+    container_name: draper-kong
     ports:
       - "54321:8000"
       - "54324:8443"
@@ -70,7 +70,7 @@ services:
   # GoTrue Auth Server
   auth:
     image: supabase/gotrue:v2.164.0
-    container_name: adpilot-auth
+    container_name: draper-auth
     ports:
       - "54325:9999"
     environment:
@@ -108,7 +108,7 @@ services:
   # PostgREST API
   rest:
     image: postgrest/postgrest:v12.2.3
-    container_name: adpilot-rest
+    container_name: draper-rest
     ports:
       - "54326:3000"
     environment:
@@ -132,7 +132,7 @@ services:
   # Postgres Meta
   meta:
     image: supabase/postgres-meta:v0.83.2
-    container_name: adpilot-meta
+    container_name: draper-meta
     ports:
       - "54327:8080"
     environment:
@@ -155,7 +155,7 @@ services:
   # Supabase Storage
   storage:
     image: supabase/storage-api:v1.11.13
-    container_name: adpilot-storage
+    container_name: draper-storage
     ports:
       - "54328:5000"
     environment:
@@ -187,7 +187,7 @@ services:
   # Realtime Server
   realtime:
     image: supabase/realtime:v2.33.58
-    container_name: adpilot-realtime
+    container_name: draper-realtime
     ports:
       - "54329:4000"
     environment:

@@ -94,10 +94,10 @@ export default function BlogPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-6">
-                AdPilot Blog
+                Draper Blog
               </h1>
               <p className="text-xl text-gray-600">
-                Insights, strategies, and updates from the AdPilot team.
+                Insights, strategies, and updates from the Draper team.
               </p>
             </div>
 
@@ -211,7 +211,7 @@ export default function BlogPage() {
                 Subscribe to our newsletter
               </h2>
               <p className="text-gray-600 mb-6">
-                Get the latest PPC insights and AdPilot updates delivered to your inbox.
+                Get the latest PPC insights and Draper updates delivered to your inbox.
               </p>
               <form className="flex gap-3 max-w-md mx-auto">
                 <input

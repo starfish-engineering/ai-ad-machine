@@ -178,7 +178,7 @@ export function DashboardHeader() {
                 <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] shadow-lg z-50">
                   <div className="px-4 py-3 border-b-2 border-[var(--color-border-harsh)]">
                     <p className="text-[11px] font-mono font-bold text-[var(--color-text-raw)]">DEMO_USER</p>
-                    <p className="text-[9px] font-mono text-[var(--color-text-dim)]">demo@adpilot.ai</p>
+                    <p className="text-[9px] font-mono text-[var(--color-text-dim)]">demo@draperads.com</p>
                   </div>
                   <div className="py-1">
                     <Link href="/dashboard/profile" className="block px-4 py-2 text-[11px] font-mono text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-signal-green)]">

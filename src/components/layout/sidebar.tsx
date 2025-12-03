@@ -151,7 +151,7 @@ export function Sidebar() {
               <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-[var(--color-signal-green)] animate-pulse" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-sm tracking-wider text-[var(--color-text-raw)]">ADPILOT</span>
+              <span className="font-display text-sm tracking-wider text-[var(--color-text-raw)]">DRAPER</span>
               <span className="text-[7px] font-mono text-[var(--color-text-dim)]">DASHBOARD_v2.0</span>
             </div>
           </Link>

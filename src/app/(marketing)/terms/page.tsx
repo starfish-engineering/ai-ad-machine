@@ -10,7 +10,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
               <p className="text-gray-600">
-                By accessing or using AdPilot's services, you agree to be bound by these 
+                By accessing or using Draper's services, you agree to be bound by these 
                 Terms of Service and all applicable laws and regulations. If you do not 
                 agree with any of these terms, you are prohibited from using our services.
               </p>
@@ -19,7 +19,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Service</h2>
               <p className="text-gray-600 mb-4">
-                AdPilot provides a software-as-a-service (SaaS) platform for managing, 
+                Draper provides a software-as-a-service (SaaS) platform for managing, 
                 monitoring, and optimizing pay-per-click (PPC) advertising campaigns across 
                 multiple platforms including Google Ads, Meta Ads, Microsoft Ads, and Amazon Ads.
               </p>
@@ -44,7 +44,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Ad Platform Authorization</h2>
               <p className="text-gray-600 mb-4">
-                By connecting your ad accounts to AdPilot, you authorize us to:
+                By connecting your ad accounts to Draper, you authorize us to:
               </p>
               <ul className="list-disc list-inside text-gray-600 space-y-2">
                 <li>Access and retrieve data from your advertising accounts</li>
@@ -84,7 +84,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Intellectual Property</h2>
               <p className="text-gray-600">
-                All content, features, and functionality of AdPilot are owned by us and 
+                All content, features, and functionality of Draper are owned by us and 
                 are protected by international copyright, trademark, and other intellectual 
                 property laws. You may not copy, modify, or distribute our content without 
                 explicit permission.
@@ -105,7 +105,7 @@ export default function TermsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Limitation of Liability</h2>
               <p className="text-gray-600">
-                TO THE MAXIMUM EXTENT PERMITTED BY LAW, ADPILOT SHALL NOT BE LIABLE FOR ANY 
+                TO THE MAXIMUM EXTENT PERMITTED BY LAW, DRAPER SHALL NOT BE LIABLE FOR ANY 
                 INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING 
                 BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES, 
                 REGARDLESS OF WHETHER WE WERE ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
@@ -138,8 +138,8 @@ export default function TermsPage() {
                 If you have any questions about these Terms, please contact us at:
               </p>
               <div className="mt-4 text-gray-600">
-                <p>AdPilot Legal Team</p>
-                <p>Email: legal@adpilot.com</p>
+                <p>Draper Legal Team</p>
+                <p>Email: legal@draperads.com</p>
                 <p>Address: 123 Marketing Lane, Suite 400, San Francisco, CA 94105</p>
               </div>
             </section>

@@ -275,7 +275,7 @@ export default function PPCInvestigator() {
             <CardContent className="p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="w-5 h-5 text-purple-500" />
-                <h3 className="font-medium text-gray-900">AdPilot AI Summary</h3>
+                <h3 className="font-medium text-gray-900">Draper AI Summary</h3>
               </div>
               <div className="space-y-2">
                 <div className="h-3 bg-gray-200 rounded w-full animate-pulse" />

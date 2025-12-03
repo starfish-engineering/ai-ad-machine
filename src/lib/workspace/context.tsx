@@ -33,7 +33,7 @@ interface WorkspaceContextValue {
 }
 
 const WorkspaceContext = createContext<WorkspaceContextValue | null>(null);
-const WORKSPACE_STORAGE_KEY = 'adpilot_current_workspace';
+const WORKSPACE_STORAGE_KEY = 'draper_current_workspace';
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [workspaces, setWorkspaces] = useState<WorkspaceWithMembership[]>([]);

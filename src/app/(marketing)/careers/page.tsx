@@ -73,7 +73,7 @@ const openPositions = [
     department: 'Customer Success',
     location: 'Remote (US)',
     type: 'Full-time',
-    description: 'Help our customers succeed and get the most value from AdPilot.',
+    description: 'Help our customers succeed and get the most value from Draper.',
   },
   {
     title: 'Content Marketing Manager',
@@ -194,7 +194,7 @@ export default function CareersPage() {
             <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Open positions</h2>
               <p className="text-lg text-gray-600">
-                Find your next role at AdPilot.
+                Find your next role at Draper.
               </p>
             </div>
 

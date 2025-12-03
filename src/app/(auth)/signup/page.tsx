@@ -72,8 +72,8 @@ export default function SignupPage() {
             <span className="text-[var(--color-signal-green)]">FREE TRIAL</span>
           </h1>
           <p className="font-mono text-sm text-[var(--color-text-muted)] mb-8">
-            &gt; JOIN_10,000+_PPC_PROFESSIONALS<br />
-            &gt; WHO_TRUST_ADPILOT_TO_OPTIMIZE_THEIR_CAMPAIGNS_<span className="animate-pulse">▋</span>
+              &gt; JOIN_10,000+_PPC_PROFESSIONALS<br />
+              &gt; WHO_TRUST_DRAPER_TO_OPTIMIZE_THEIR_CAMPAIGNS_<span className="animate-pulse">▋</span>
           </p>
           
           {/* Benefits */}
@@ -111,7 +111,7 @@ export default function SignupPage() {
               <div className="relative w-10 h-10 border-2 border-[var(--color-text-raw)] flex items-center justify-center bg-[var(--color-void)]">
                 <Terminal className="w-5 h-5 text-[var(--color-signal-green)]" />
               </div>
-              <span className="font-display text-xl text-[var(--color-text-raw)]">ADPILOT</span>
+              <span className="font-display text-xl text-[var(--color-text-raw)]">DRAPER</span>
             </Link>
           </div>
 
@@ -123,7 +123,7 @@ export default function SignupPage() {
                 <div className="w-8 h-8 border border-[var(--color-signal-green)] flex items-center justify-center">
                   <Terminal className="w-4 h-4 text-[var(--color-signal-green)]" />
                 </div>
-                <span className="font-display text-lg text-[var(--color-text-raw)]">ADPILOT</span>
+                <span className="font-display text-lg text-[var(--color-text-raw)]">DRAPER</span>
               </div>
               <h1 className="font-display text-xl text-[var(--color-text-raw)]">CREATE_ACCOUNT</h1>
               <p className="text-[10px] font-mono text-[var(--color-text-muted)]">14_DAY_FREE_TRIAL</p>

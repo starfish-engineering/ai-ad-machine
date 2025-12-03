@@ -49,7 +49,7 @@ Acquire and retain customers profitably at scale.
 ---
 
 ### 3. Customer Success
-Ensure every customer achieves their goals with AdPilot.
+Ensure every customer achieves their goals with Draper.
 
 **Key Initiatives:**
 - Proactive onboarding and training
@@ -107,18 +107,18 @@ Build a scalable, efficient organization.
 4. "The PPC platform that has your back"
 
 ### Positioning Statement
-> For PPC professionals and agencies who struggle with the complexity and time demands of managing paid media, AdPilot is a modern PPC management platform that automates routine tasks, protects budgets, and delivers actionable insights. Unlike legacy tools that are complex and outdated, AdPilot combines powerful features with an intuitive interface, backed by real human support.
+> For PPC professionals and agencies who struggle with the complexity and time demands of managing paid media, Draper is a modern PPC management platform that automates routine tasks, protects budgets, and delivers actionable insights. Unlike legacy tools that are complex and outdated, Draper combines powerful features with an intuitive interface, backed by real human support.
 
 ### Key Messages
 
 **For Agencies:**
-"Scale your agency without scaling your team. AdPilot automates the routine so you can focus on strategy and client relationships."
+"Scale your agency without scaling your team. Draper automates the routine so you can focus on strategy and client relationships."
 
 **For In-House Teams:**
-"Never miss a beat on your campaigns. AdPilot monitors 24/7, alerts you to issues, and recommends optimizations automatically."
+"Never miss a beat on your campaigns. Draper monitors 24/7, alerts you to issues, and recommends optimizations automatically."
 
 **For Freelancers:**
-"Work smarter, not harder. AdPilot gives you enterprise-grade tools at a price that makes sense for your business."
+"Work smarter, not harder. Draper gives you enterprise-grade tools at a price that makes sense for your business."
 
 ## Risks & Mitigations
 

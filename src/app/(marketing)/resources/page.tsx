@@ -23,14 +23,14 @@ const resources = [
     icon: Trophy,
     name: 'Case Studies',
     href: '/case-studies',
-    description: 'See how leading teams use AdPilot to transform their PPC results.',
+    description: 'See how leading teams use Draper to transform their PPC results.',
     cta: 'View case studies',
   },
   {
     icon: BookOpen,
     name: 'Documentation',
     href: '/docs',
-    description: 'Comprehensive guides and tutorials to help you get the most from AdPilot.',
+    description: 'Comprehensive guides and tutorials to help you get the most from Draper.',
     cta: 'Browse docs',
   },
   {
@@ -59,7 +59,7 @@ const featuredPosts = [
   },
   {
     title: 'How Agency X Scaled to 500 Accounts',
-    excerpt: 'A case study on using AdPilot to manage massive account portfolios.',
+    excerpt: 'A case study on using Draper to manage massive account portfolios.',
     category: 'Case Study',
     date: 'Nov 5, 2025',
     href: '/case-studies',
@@ -68,7 +68,7 @@ const featuredPosts = [
 
 const webinars = [
   {
-    title: 'Getting Started with AdPilot',
+    title: 'Getting Started with Draper',
     description: 'A complete walkthrough for new users',
     duration: '45 min',
   },
@@ -98,7 +98,7 @@ export default function ResourcesPage() {
               Resources
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Everything you need to master PPC management with AdPilot.
+              Everything you need to master PPC management with Draper.
             </p>
           </div>
         </section>
@@ -172,7 +172,7 @@ export default function ResourcesPage() {
                   Learn from the experts
                 </h2>
                 <p className="text-lg text-gray-600 mb-8">
-                  Watch our library of webinars to learn PPC strategies and AdPilot best practices.
+                  Watch our library of webinars to learn PPC strategies and Draper best practices.
                 </p>
                 <Link href="/demo">
                   <Button variant="outline" className="gap-2">
@@ -209,7 +209,7 @@ export default function ResourcesPage() {
             <Users className="w-12 h-12 mx-auto mb-6 text-blue-400" />
             <h2 className="text-3xl font-bold mb-4">Join the community</h2>
             <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-              Connect with thousands of PPC professionals using AdPilot. Share strategies, ask questions, and learn from each other.
+              Connect with thousands of PPC professionals using Draper. Share strategies, ask questions, and learn from each other.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="gap-2">

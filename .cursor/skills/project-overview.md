@@ -1,8 +1,8 @@
-# AdPilot Project Overview
+# Draper Project Overview
 
-## What is AdPilot?
+## What is Draper?
 
-AdPilot is a B2B SaaS platform for PPC (Pay-Per-Click) automation. It helps paid media teams:
+Draper is a B2B SaaS platform for PPC (Pay-Per-Click) automation. It helps paid media teams:
 - **Automate** routine optimization tasks
 - **Monitor** campaigns in real-time with intelligent alerts
 - **Optimize** with AI-powered recommendations

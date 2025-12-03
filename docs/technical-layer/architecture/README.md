@@ -4,7 +4,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              ADPILOT ARCHITECTURE                            │
+│                              DRAPER ARCHITECTURE                            │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
@@ -323,7 +323,7 @@ return NextResponse.json(
 |-------------|--------|----------|-----|
 | Local | - | Docker | localhost:3000 |
 | Preview | PR branches | Supabase Preview | *.vercel.app |
-| Production | main | Supabase Prod | adpilot.com |
+| Production | main | Supabase Prod | draperads.com |
 
 ### CI/CD Pipeline
 

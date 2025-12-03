@@ -68,7 +68,7 @@ const liveStats: Array<{ label: string; value: string; change: string; type: 'po
 
 const testimonials = [
   {
-    quote: "ADPILOT HAS COMPLETELY TRANSFORMED HOW WE MANAGE OUR CLIENTS' CAMPAIGNS. WE'VE CUT OPTIMIZATION TIME BY 60%.",
+    quote: "DRAPER HAS COMPLETELY TRANSFORMED HOW WE MANAGE OUR CLIENTS' CAMPAIGNS. WE'VE CUT OPTIMIZATION TIME BY 60%.",
     author: 'SARAH_CHEN',
     role: 'DIRECTOR_PAID_MEDIA',
     company: 'GROWTH_AGENCY',
@@ -166,7 +166,7 @@ export default function HomePage() {
                       <span className="w-3 h-3 bg-[var(--color-signal-yellow)]" />
                       <span className="w-3 h-3 bg-[var(--color-signal-green)]" />
                     </div>
-                    <span className="text-[10px] font-mono text-[var(--color-text-muted)]">ADPILOT_DASHBOARD_v2.0</span>
+                    <span className="text-[10px] font-mono text-[var(--color-text-muted)]">DRAPER_DASHBOARD_v2.0</span>
                     <Terminal className="w-4 h-4 text-[var(--color-signal-green)]" />
                   </div>
                   
@@ -311,7 +311,7 @@ export default function HomePage() {
               </h2>
               <p className="font-mono text-sm text-[var(--color-text-muted)] max-w-2xl mx-auto">
                 &gt; FROM REAL-TIME MONITORING TO AI-POWERED OPTIMIZATION<br />
-                &gt; ADPILOT GIVES YOU THE TOOLS TO WORK SMARTER_
+                &gt; DRAPER GIVES YOU THE TOOLS TO WORK SMARTER_
               </p>
             </div>
 
@@ -379,7 +379,7 @@ export default function HomePage() {
                 {
                   step: '003',
                   title: 'AUTOMATE',
-                  description: 'Set up rules, enable automation, and let AdPilot work around the clock for you.',
+                  description: 'Set up rules, enable automation, and let Draper work around the clock for you.',
                   icon: Cpu,
                 },
               ].map((item, index) => (

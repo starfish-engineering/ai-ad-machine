@@ -2,7 +2,7 @@
 
 ## Overview
 
-AdPilot uses a hybrid API approach:
+Draper uses a hybrid API approach:
 1. **Server Actions** - For mutations from React components
 2. **API Routes** - For external integrations and webhooks
 3. **Supabase Direct** - For realtime and simple queries

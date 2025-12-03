@@ -18,7 +18,7 @@ const docSections = [
   {
     icon: Rocket,
     title: 'Getting Started',
-    description: 'New to AdPilot? Start here.',
+    description: 'New to Draper? Start here.',
     links: [
       { name: 'Quick Start Guide', href: '/docs' },
       { name: 'Connecting Ad Accounts', href: '/docs' },
@@ -90,7 +90,7 @@ const popularArticles = [
     readTime: '5 min',
   },
   {
-    title: 'Connecting Google Ads to AdPilot',
+    title: 'Connecting Google Ads to Draper',
     category: 'Getting Started',
     readTime: '3 min',
   },
@@ -130,7 +130,7 @@ export default function DocsPage() {
                 How can we help?
               </h1>
               <p className="text-xl text-gray-600">
-                Find guides, tutorials, and API reference to help you get the most from AdPilot.
+                Find guides, tutorials, and API reference to help you get the most from Draper.
               </p>
             </div>
 
@@ -220,10 +220,10 @@ export default function DocsPage() {
                     API Reference
                   </div>
                   <h2 className="text-3xl font-bold mb-4">
-                    Build with the AdPilot API
+                    Build with the Draper API
                   </h2>
                   <p className="text-gray-400 mb-6">
-                    Integrate AdPilot into your workflow with our comprehensive REST API. 
+                    Integrate Draper into your workflow with our comprehensive REST API. 
                     Create automations, pull data, and build custom tools.
                   </p>
                   <div className="flex gap-4">
@@ -244,7 +244,7 @@ export default function DocsPage() {
                 <div className="bg-gray-800 rounded-xl p-6 font-mono text-sm">
                   <div className="text-gray-400 mb-2"># Get campaigns</div>
                   <div className="text-green-400">
-                    curl -X GET https://api.adpilot.io/v1/campaigns \
+                    curl -X GET https://api.draperads.com/v1/campaigns \
                   </div>
                   <div className="text-gray-300 ml-4">
                     -H &quot;Authorization: Bearer YOUR_API_KEY&quot;

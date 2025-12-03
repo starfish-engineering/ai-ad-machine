@@ -9,8 +9,8 @@ const contactMethods = [
     icon: Mail,
     title: 'Email',
     description: 'Send us an email anytime',
-    value: 'hello@adpilot.com',
-    action: 'mailto:hello@adpilot.com',
+    value: 'hello@draperads.com',
+    action: 'mailto:hello@draperads.com',
   },
   {
     icon: Phone,
@@ -66,7 +66,7 @@ export default function ContactPage() {
               Get in touch
             </h1>
             <p className="text-xl text-gray-600">
-              Have questions about AdPilot? We'd love to hear from you. 
+              Have questions about Draper? We'd love to hear from you. 
               Send us a message and we'll respond as soon as possible.
             </p>
           </div>

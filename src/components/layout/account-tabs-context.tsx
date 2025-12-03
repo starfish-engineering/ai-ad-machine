@@ -19,7 +19,7 @@ interface AccountTabsContextType {
   closeAllTabs: () => void;
 }
 
-const STORAGE_KEY = 'adpilot-account-tabs';
+const STORAGE_KEY = 'draper-account-tabs';
 const AccountTabsContext = createContext<AccountTabsContextType | undefined>(undefined);
 
 function loadTabsFromStorage(): { tabs: AccountTab[]; activeTabId: string | null } {

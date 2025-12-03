@@ -1,4 +1,4 @@
--- AdPilot Database Schema
+-- Draper Database Schema
 -- Initial migration: Core tables for PPC management platform
 
 -- Enable necessary extensions

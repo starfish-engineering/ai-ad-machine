@@ -9,8 +9,8 @@ export default function CookiePolicyPage() {
 
           <div className="prose prose-gray max-w-none">
             <p>
-              This Cookie Policy explains how AdPilot (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) uses cookies and 
-              similar tracking technologies when you visit our website at adpilot.io and use our services.
+              This Cookie Policy explains how Draper (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) uses cookies and 
+              similar tracking technologies when you visit our website at draperads.com and use our services.
             </p>
 
             <h2>What Are Cookies?</h2>
@@ -141,7 +141,7 @@ export default function CookiePolicyPage() {
               contact us at:
             </p>
             <ul>
-              <li>Email: privacy@adpilot.io</li>
+              <li>Email: privacy@draperads.com</li>
               <li>Address: 123 Marketing Street, Suite 100, San Francisco, CA 94105</li>
             </ul>
 

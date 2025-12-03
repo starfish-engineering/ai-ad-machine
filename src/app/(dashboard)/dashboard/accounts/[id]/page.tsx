@@ -490,7 +490,7 @@ export default function AccountDashboard({ params }: AccountDetailProps) {
           <div className="bg-[var(--color-terminal)] border-2 border-[var(--color-border-harsh)] p-4">
             <h3 className="text-sm font-mono font-bold text-[var(--color-text-raw)] flex items-center gap-2 mb-4">
               <Sparkles className="w-4 h-4 text-[var(--color-signal-magenta)]" />
-              ADPILOT_SIDEKICK
+              DRAPER_SIDEKICK
             </h3>
             
             {/* AI Summary */}

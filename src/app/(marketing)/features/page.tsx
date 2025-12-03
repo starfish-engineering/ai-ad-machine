@@ -140,7 +140,7 @@ const featureCategories = [
       {
         icon: Globe,
         name: 'Multi-Account Support',
-        description: 'Manage hundreds of ad accounts from a single AdPilot workspace.',
+        description: 'Manage hundreds of ad accounts from a single Draper workspace.',
       },
       {
         icon: Lock,
@@ -180,7 +180,7 @@ export default function FeaturesPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              From real-time monitoring to AI-powered insights, AdPilot gives you the complete toolkit to manage paid media at scale.
+              From real-time monitoring to AI-powered insights, Draper gives you the complete toolkit to manage paid media at scale.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/signup">
@@ -257,7 +257,7 @@ export default function FeaturesPage() {
                 Ready to supercharge your PPC?
               </h2>
               <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-                Start your free 14-day trial today and discover why thousands of marketers trust AdPilot.
+                Start your free 14-day trial today and discover why thousands of marketers trust Draper.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/signup">

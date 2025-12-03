@@ -1,12 +1,12 @@
 -- =============================================================================
--- AdPilot Seed Data
+-- Draper Seed Data
 -- =============================================================================
 -- This script is IDEMPOTENT: safe to run multiple times
 -- It creates realistic test data for development and demonstration
 -- =============================================================================
 
 -- Configuration: Test User Credentials
--- Email: demo@adpilot.io
+-- Email: demo@draperads.com
 -- Password: demo1234
 -- =============================================================================
 
@@ -43,7 +43,7 @@ BEGIN
     ) VALUES (
       demo_user_id,
       '00000000-0000-0000-0000-000000000000',
-      'demo@adpilot.io',
+      'demo@draperads.com',
       crypt('demo1234', gen_salt('bf')),
       NOW(),
       '{"provider": "email", "providers": ["email"]}',
@@ -79,7 +79,7 @@ BEGIN
     ) VALUES (
       team_user_id,
       '00000000-0000-0000-0000-000000000000',
-      'team@adpilot.io',
+      'team@draperads.com',
       crypt('team1234', gen_salt('bf')),
       NOW(),
       '{"provider": "email", "providers": ["email"]}',
@@ -815,7 +815,7 @@ CREATE TRIGGER on_auth_user_created
 -- -----------------------------------------------------------------------------
 -- DONE! Summary of seeded data:
 -- -----------------------------------------------------------------------------
--- • 2 test users (demo@adpilot.io / demo1234, team@adpilot.io / team1234)
+-- • 2 test users (demo@draperads.com / demo1234, team@draperads.com / team1234)
 -- • 3 workspaces (agency + personal + client)
 -- • 6 ad accounts across Google, Meta, Microsoft, Amazon
 -- • 11 campaigns with realistic metrics

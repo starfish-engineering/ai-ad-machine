@@ -1,4 +1,4 @@
-# Testing Guide for AdPilot
+# Testing Guide for Draper
 
 ## Testing Philosophy
 

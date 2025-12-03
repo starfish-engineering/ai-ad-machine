@@ -7,8 +7,8 @@ const caseStudies = [
     company: 'Growth Agency Co.',
     industry: 'Digital Agency',
     logo: '🚀',
-    headline: 'How Growth Agency Co. scaled to 500 accounts with AdPilot',
-    excerpt: 'Learn how this fast-growing agency used AdPilot automation to manage 10x more accounts without adding headcount.',
+    headline: 'How Growth Agency Co. scaled to 500 accounts with Draper',
+    excerpt: 'Learn how this fast-growing agency used Draper automation to manage 10x more accounts without adding headcount.',
     stats: [
       { value: '500+', label: 'Accounts managed', icon: TrendingUp },
       { value: '60%', label: 'Time saved', icon: Clock },
@@ -21,7 +21,7 @@ const caseStudies = [
     industry: 'E-commerce',
     logo: '🛒',
     headline: 'E-Shop Direct reduced ACoS by 40% with smart automation',
-    excerpt: 'See how this e-commerce brand used AdPilot to optimize their Amazon advertising and dramatically improve profitability.',
+    excerpt: 'See how this e-commerce brand used Draper to optimize their Amazon advertising and dramatically improve profitability.',
     stats: [
       { value: '40%', label: 'ACoS reduction', icon: TrendingUp },
       { value: '$2M+', label: 'Ad spend managed', icon: DollarSign },
@@ -33,7 +33,7 @@ const caseStudies = [
     company: 'SaaS Metrics',
     industry: 'B2B SaaS',
     logo: '📊',
-    headline: 'SaaS Metrics improved lead quality by 45% with AdPilot',
+    headline: 'SaaS Metrics improved lead quality by 45% with Draper',
     excerpt: 'This B2B SaaS company used our AI insights to optimize their Google Ads campaigns for better quality leads.',
     stats: [
       { value: '45%', label: 'Better lead quality', icon: TrendingUp },
@@ -47,7 +47,7 @@ const caseStudies = [
     industry: 'Home Services',
     logo: '🏠',
     headline: 'Local business generated 3x more leads with budget protection',
-    excerpt: 'Learn how this local service company used AdPilot\'s budget monitoring to prevent overspend while growing leads.',
+    excerpt: 'Learn how this local service company used Draper\'s budget monitoring to prevent overspend while growing leads.',
     stats: [
       { value: '3x', label: 'More leads', icon: TrendingUp },
       { value: '$0', label: 'Overspend', icon: DollarSign },
@@ -60,7 +60,7 @@ const caseStudies = [
     industry: 'Retail',
     logo: '👗',
     headline: 'Fashion brand achieved 4.5x ROAS across social platforms',
-    excerpt: 'See how this fashion retailer used AdPilot to optimize their Meta and TikTok campaigns for maximum return.',
+    excerpt: 'See how this fashion retailer used Draper to optimize their Meta and TikTok campaigns for maximum return.',
     stats: [
       { value: '4.5x', label: 'ROAS achieved', icon: TrendingUp },
       { value: '50%', label: 'Creative test velocity', icon: Clock },
@@ -73,7 +73,7 @@ const caseStudies = [
     industry: 'Technology',
     logo: '💻',
     headline: 'Startup cut customer acquisition costs by 55%',
-    excerpt: 'How this Series A startup used AdPilot\'s AI recommendations to dramatically improve their paid acquisition efficiency.',
+    excerpt: 'How this Series A startup used Draper\'s AI recommendations to dramatically improve their paid acquisition efficiency.',
     stats: [
       { value: '55%', label: 'Lower CAC', icon: DollarSign },
       { value: '2x', label: 'Conversion rate', icon: TrendingUp },
@@ -99,7 +99,7 @@ export default function CaseStudiesPage() {
               Customer Success Stories
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              See how leading teams use AdPilot to transform their PPC results.
+              See how leading teams use Draper to transform their PPC results.
             </p>
             
             {/* Industry Filter */}
@@ -197,7 +197,7 @@ export default function CaseStudiesPage() {
                 Ready to become our next success story?
               </h2>
               <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-                Join thousands of teams already using AdPilot to transform their PPC results.
+                Join thousands of teams already using Draper to transform their PPC results.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/signup">

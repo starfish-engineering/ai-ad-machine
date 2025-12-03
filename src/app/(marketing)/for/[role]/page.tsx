@@ -47,7 +47,7 @@ const roles = {
       'Onboard new clients in minutes, not days',
     ],
     testimonial: {
-      quote: "AdPilot lets our team of 5 manage over 100 accounts. We've grown revenue 40% without adding headcount.",
+      quote: "Draper lets our team of 5 manage over 100 accounts. We've grown revenue 40% without adding headcount.",
       author: 'Sarah Chen',
       role: 'Director of Paid Media',
       company: 'Growth Marketing Agency',
@@ -95,7 +95,7 @@ const roles = {
       'Look like a team of experts as a solo operator',
     ],
     testimonial: {
-      quote: "As a freelancer, AdPilot is like having a team of analysts working for me 24/7. It's my secret weapon.",
+      quote: "As a freelancer, Draper is like having a team of analysts working for me 24/7. It's my secret weapon.",
       author: 'Mike Rodriguez',
       role: 'Independent PPC Consultant',
       company: '',
@@ -143,7 +143,7 @@ const roles = {
       'Prove marketing ROI with clear attribution',
     ],
     testimonial: {
-      quote: "AdPilot helped us reduce CPA by 30% in Q1. The executive dashboards made it easy to show our impact.",
+      quote: "Draper helped us reduce CPA by 30% in Q1. The executive dashboards made it easy to show our impact.",
       author: 'Alex Thompson',
       role: 'Performance Marketing Manager',
       company: 'E-commerce Brand',
@@ -191,7 +191,7 @@ const roles = {
       'Meet compliance and security requirements',
     ],
     testimonial: {
-      quote: "The enterprise security features and dedicated support made AdPilot the clear choice for our global marketing team.",
+      quote: "The enterprise security features and dedicated support made Draper the clear choice for our global marketing team.",
       author: 'Jennifer Lee',
       role: 'VP of Digital Marketing',
       company: 'Fortune 500 Retailer',
@@ -345,7 +345,7 @@ export default async function RolePage({
               Ready to get started?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Join thousands of PPC professionals who trust AdPilot.
+              Join thousands of PPC professionals who trust Draper.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={data.ctaLink}>

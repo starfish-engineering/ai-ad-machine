@@ -26,7 +26,7 @@ const values = [
 ];
 
 const timeline = [
-  { year: '2020', event: 'AdPilot founded by PPC veterans frustrated with existing tools' },
+  { year: '2020', event: 'Draper founded by PPC veterans frustrated with existing tools' },
   { year: '2021', event: 'Launched beta with 50 early adopter agencies' },
   { year: '2022', event: 'Reached 1,000 customers and $1B in managed ad spend' },
   { year: '2023', event: 'Introduced AI-powered features and Sidekick assistant' },
@@ -53,7 +53,7 @@ export default function AboutPage() {
               <span className="text-blue-600">PPC management</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              AdPilot was founded by PPC professionals who were tired of cobbling 
+              Draper was founded by PPC professionals who were tired of cobbling 
               together spreadsheets, scripts, and disparate tools. We knew there 
               had to be a better way.
             </p>

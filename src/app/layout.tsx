@@ -11,34 +11,34 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'AdPilot - Worry-free PPC Management',
-    template: '%s | AdPilot',
+    default: 'Draper - Worry-free PPC Management',
+    template: '%s | Draper',
   },
   description: 'Monitor, optimize, and safeguard your paid media accounts with always-on automation — while you stay in control.',
   keywords: ['PPC', 'Google Ads', 'Meta Ads', 'Amazon Ads', 'advertising automation', 'PPC management', 'paid media'],
-  authors: [{ name: 'AdPilot' }],
+  authors: [{ name: 'Draper' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://adpilot.com',
-    siteName: 'AdPilot',
-    title: 'AdPilot - Worry-free PPC Management',
+    url: 'https://draperads.com',
+    siteName: 'Draper',
+    title: 'Draper - Worry-free PPC Management',
     description: 'Monitor, optimize, and safeguard your paid media accounts with always-on automation.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'AdPilot - PPC Management Platform',
+        alt: 'Draper - PPC Management Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AdPilot - Worry-free PPC Management',
+    title: 'Draper - Worry-free PPC Management',
     description: 'Monitor, optimize, and safeguard your paid media accounts with always-on automation.',
     images: ['/og-image.png'],
-    creator: '@adpilot',
+    creator: '@draperads',
   },
   robots: {
     index: true,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 const themeScript = `
   (function() {
     try {
-      var theme = localStorage.getItem('adpilot-theme');
+      var theme = localStorage.getItem('draper-theme');
       if (theme === 'dark' || theme === 'light') {
         document.documentElement.setAttribute('data-theme', theme);
       } else if (theme === 'system' || !theme) {
@@ -72,7 +72,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="font-sans antialiased">
-        <ThemeProvider defaultTheme="system" storageKey="adpilot-theme">
+        <ThemeProvider defaultTheme="system" storageKey="draper-theme">
           {children}
         </ThemeProvider>
       </body>

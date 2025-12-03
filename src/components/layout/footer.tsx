@@ -36,9 +36,9 @@ const footerNavigation = {
 };
 
 const socialLinks = [
-  { name: 'X', href: 'https://twitter.com/adpilot', icon: 'X' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/company/adpilot', icon: 'in' },
-  { name: 'GitHub', href: 'https://github.com/adpilot', icon: '<>' },
+  { name: 'X', href: 'https://twitter.com/draperads', icon: 'X' },
+  { name: 'LinkedIn', href: 'https://linkedin.com/company/draperads', icon: 'in' },
+  { name: 'GitHub', href: 'https://github.com/draperads', icon: '<>' },
 ];
 
 const stats = [
@@ -109,7 +109,7 @@ export function Footer() {
                 <Terminal className="w-5 h-5 text-[var(--color-signal-green)]" />
               </div>
               <div className="flex flex-col">
-                <span className="font-display text-lg tracking-wider text-[var(--color-text-raw)]">ADPILOT</span>
+                <span className="font-display text-lg tracking-wider text-[var(--color-text-raw)]">DRAPER</span>
               </div>
             </Link>
             <p className="text-[11px] font-mono text-[var(--color-text-muted)] leading-relaxed mb-6">
@@ -223,7 +223,7 @@ export function Footer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-4 text-[10px] font-mono text-[var(--color-text-dim)]">
-              <span>© {new Date().getFullYear()} ADPILOT_SYSTEMS</span>
+              <span>© {new Date().getFullYear()} DRAPER_SYSTEMS</span>
               <span className="hidden md:inline">|</span>
               <span className="hidden md:inline">BUILD_v2.4.7</span>
               <span className="hidden md:inline">|</span>

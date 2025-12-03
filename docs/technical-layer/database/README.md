@@ -2,7 +2,7 @@
 
 ## Overview
 
-AdPilot uses Supabase PostgreSQL with Row Level Security (RLS) enabled on all tables.
+Draper uses Supabase PostgreSQL with Row Level Security (RLS) enabled on all tables.
 
 ## Entity Relationship Diagram
 

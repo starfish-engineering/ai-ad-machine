@@ -4,7 +4,7 @@
 
 **"Worry-free PPC management in the AI era."**
 
-AdPilot delivers a unique combination of:
+Draper delivers a unique combination of:
 1. **Automation with Control** - Set it and trust it, but stay in command
 2. **Protection & Guardrails** - Never wake up to a blown budget
 3. **Actionable Intelligence** - Not just data, but recommendations

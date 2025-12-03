@@ -1,4 +1,4 @@
-# Code Conventions for AdPilot
+# Code Conventions for Draper
 
 ## TypeScript Guidelines
 

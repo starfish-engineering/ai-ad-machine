@@ -19,7 +19,7 @@ const benefits = [
   {
     icon: Clock,
     title: '30-minute session',
-    description: 'Get a comprehensive overview of AdPilot tailored to your needs.',
+    description: 'Get a comprehensive overview of Draper tailored to your needs.',
   },
   {
     icon: Users,
@@ -29,7 +29,7 @@ const benefits = [
   {
     icon: CheckCircle,
     title: 'Custom walkthrough',
-    description: 'See how AdPilot can solve your specific PPC challenges.',
+    description: 'See how Draper can solve your specific PPC challenges.',
   },
 ];
 
@@ -109,11 +109,11 @@ export default function DemoPage() {
                 </div>
                 
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-6">
-                  See AdPilot in action
+                  See Draper in action
                 </h1>
                 
                 <p className="text-xl text-gray-600 mb-8">
-                  Schedule a personalized demo with our team and discover how AdPilot can transform your PPC management workflow.
+                  Schedule a personalized demo with our team and discover how Draper can transform your PPC management workflow.
                 </p>
 
                 <div className="space-y-4 mb-12">

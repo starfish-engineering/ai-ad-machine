@@ -1,10 +1,10 @@
-# AdPilot - PPC Automation SaaS Platform
+# Draper - PPC Automation SaaS Platform
 
 > Worry-free PPC management in the AI era. Monitor, optimize, and safeguard your paid media accounts with always-on automation — while you stay in control.
 
 ## 🎯 Project Overview
 
-AdPilot is a B2B SaaS platform for paid media and PPC teams that:
+Draper is a B2B SaaS platform for paid media and PPC teams that:
 - **Automates** routine optimization tasks
 - **Protects** with guardrails (budget, bids, alerts)
 - **Analyzes** with deeper insights and reporting
@@ -132,7 +132,7 @@ ai-ad-machine/
 |-------------|----------|-----|
 | Local | Docker Supabase | http://localhost:3000 |
 | Preview | Cloud Supabase (Preview) | Vercel Preview URL |
-| Production | Cloud Supabase (Prod) | adpilot.com |
+| Production | Cloud Supabase (Prod) | draperads.com |
 
 ## 📜 Scripts
 

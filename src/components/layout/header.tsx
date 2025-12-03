@@ -102,7 +102,7 @@ export function Header() {
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-[var(--color-signal-green)] animate-pulse" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-xl tracking-wider text-[var(--color-text-raw)]">ADPILOT</span>
+              <span className="font-display text-xl tracking-wider text-[var(--color-text-raw)]">DRAPER</span>
               <span className="text-[8px] font-mono text-[var(--color-text-muted)] tracking-widest">DATA_SYSTEMS_v2.0</span>
             </div>
           </Link>

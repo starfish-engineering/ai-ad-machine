@@ -62,7 +62,7 @@ export default function SecurityPage() {
               <Shield className="w-8 h-8 text-blue-400" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Security at AdPilot
+              Security at Draper
             </h1>
             <p className="text-xl text-slate-300">
               Your data security is our top priority. We implement industry-leading 
@@ -158,10 +158,10 @@ export default function SecurityPage() {
                 If you discover a security issue, please report it to our security team.
               </p>
               <a
-                href="mailto:security@adpilot.com"
+                href="mailto:security@draperads.com"
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors"
               >
-                security@adpilot.com
+                security@draperads.com
               </a>
             </div>
           </div>
@@ -226,7 +226,7 @@ export default function SecurityPage() {
               additional documentation upon request.
             </p>
             <a
-              href="mailto:security@adpilot.com"
+              href="mailto:security@draperads.com"
               className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               Contact Security Team

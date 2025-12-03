@@ -1,6 +1,6 @@
 # ⚙️ Technical Layer - Architecture & Implementation
 
-> The inner workings of AdPilot: code architecture, database design, and technical decisions.
+> The inner workings of Draper: code architecture, database design, and technical decisions.
 
 ## Purpose
 

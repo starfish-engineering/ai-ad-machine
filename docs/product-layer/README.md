@@ -1,6 +1,6 @@
 # 🎨 Product Layer - User Experience & Features
 
-> The surface area where users interact with AdPilot: features, flows, and the experience we deliver.
+> The surface area where users interact with Draper: features, flows, and the experience we deliver.
 
 ## Purpose
 

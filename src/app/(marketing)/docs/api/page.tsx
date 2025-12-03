@@ -80,10 +80,10 @@ const features = [
   },
 ];
 
-const codeExample = `const AdPilot = require('@adpilot/sdk');
+const codeExample = `const Draper = require('@draper/sdk');
 
-const client = new AdPilot({
-  apiKey: process.env.ADPILOT_API_KEY,
+const client = new Draper({
+  apiKey: process.env.DRAPER_API_KEY,
 });
 
 // Get all campaigns
@@ -122,10 +122,10 @@ export default function ApiDocsPage() {
                   API Reference
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-6">
-                  Build with the AdPilot API
+                  Build with the Draper API
                 </h1>
                 <p className="text-xl text-gray-600 mb-8">
-                  Integrate AdPilot into your workflow with our powerful REST API. 
+                  Integrate Draper into your workflow with our powerful REST API. 
                   Access campaigns, create rules, and automate your PPC management.
                 </p>
                 <div className="flex flex-wrap gap-4">
@@ -178,7 +178,7 @@ export default function ApiDocsPage() {
             <div className="flex flex-col md:flex-row md:items-center gap-4">
               <span className="text-sm font-medium text-gray-500">Base URL:</span>
               <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-4 py-2">
-                <code className="text-sm text-gray-900">https://api.adpilot.io/v1</code>
+                <code className="text-sm text-gray-900">https://api.draperads.com/v1</code>
                 <button className="p-1 hover:bg-gray-200 rounded">
                   <Copy className="w-4 h-4 text-gray-500" />
                 </button>
@@ -238,7 +238,7 @@ export default function ApiDocsPage() {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Authentication</h2>
                 <p className="text-gray-600 mb-6">
-                  The AdPilot API uses API keys to authenticate requests. You can view and manage 
+                  The Draper API uses API keys to authenticate requests. You can view and manage 
                   your API keys in your account settings.
                 </p>
                 <ul className="space-y-3 mb-6">
@@ -266,7 +266,7 @@ export default function ApiDocsPage() {
               <div className="bg-gray-900 rounded-xl p-6">
                 <div className="text-xs text-gray-500 mb-2">Example Request</div>
                 <pre className="text-sm text-gray-300 overflow-x-auto">
-                  <code>{`curl -X GET https://api.adpilot.io/v1/accounts \\
+                  <code>{`curl -X GET https://api.draperads.com/v1/accounts \\
   -H "Authorization: Bearer sk_live_..." \\
   -H "Content-Type: application/json"`}</code>
                 </pre>
@@ -282,7 +282,7 @@ export default function ApiDocsPage() {
               <Webhook className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Webhooks</h2>
               <p className="text-gray-600">
-                Receive real-time notifications when events happen in your AdPilot account. 
+                Receive real-time notifications when events happen in your Draper account. 
                 Configure webhook endpoints to integrate with your systems.
               </p>
             </div>
@@ -311,7 +311,7 @@ export default function ApiDocsPage() {
               Ready to start building?
             </h2>
             <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Create your API key and start integrating AdPilot into your workflow today.
+              Create your API key and start integrating Draper into your workflow today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="gap-2">

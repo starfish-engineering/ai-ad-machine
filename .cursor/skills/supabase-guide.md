@@ -1,4 +1,4 @@
-# Supabase Guide for AdPilot
+# Supabase Guide for Draper
 
 ## Local Development
 

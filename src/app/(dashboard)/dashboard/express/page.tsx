@@ -243,7 +243,7 @@ export default function ExpressOptimizations() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-display text-2xl text-[var(--color-text-raw)]">ADPILOT_EXPRESS</h1>
+          <h1 className="font-display text-2xl text-[var(--color-text-raw)]">DRAPER_EXPRESS</h1>
           <p className="text-xs font-mono text-[var(--color-text-muted)]">
             &gt; {workspace.name.toUpperCase().replace(/ /g, '_')} • One-click optimizations for your campaigns
           </p>

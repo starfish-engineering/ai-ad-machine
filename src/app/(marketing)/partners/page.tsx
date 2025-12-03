@@ -30,7 +30,7 @@ const partnerTypes = [
   {
     icon: Code,
     title: 'Technology Partners',
-    description: 'For platforms and tools that integrate with AdPilot.',
+    description: 'For platforms and tools that integrate with Draper.',
     benefits: [
       'API access and support',
       'Joint product development',
@@ -73,13 +73,13 @@ const featuredPartners = [
 
 const testimonials = [
   {
-    quote: "Partnering with AdPilot has been a game-changer for our agency. Our clients love the platform and we've grown our revenue significantly.",
+    quote: "Partnering with Draper has been a game-changer for our agency. Our clients love the platform and we've grown our revenue significantly.",
     author: 'Jennifer Martinez',
     role: 'CEO',
     company: 'Growth Digital Agency',
   },
   {
-    quote: "The integration process was smooth and the AdPilot team was incredibly supportive. Our customers now have access to powerful PPC automation.",
+    quote: "The integration process was smooth and the Draper team was incredibly supportive. Our customers now have access to powerful PPC automation.",
     author: 'David Kim',
     role: 'CTO',
     company: 'Marketing Analytics Co',
@@ -101,7 +101,7 @@ export default function PartnersPage() {
               Partner Program
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-6">
-              Grow with AdPilot
+              Grow with Draper
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Join our partner ecosystem and unlock new opportunities for growth. 
@@ -178,7 +178,7 @@ export default function PartnersPage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">Why partner with AdPilot?</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">Why partner with Draper?</h2>
                 <div className="space-y-6">
                   {[
                     {
@@ -288,7 +288,7 @@ export default function PartnersPage() {
                 Ready to partner with us?
               </h2>
               <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto">
-                Apply to join our partner program today and start growing your business with AdPilot.
+                Apply to join our partner program today and start growing your business with Draper.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button

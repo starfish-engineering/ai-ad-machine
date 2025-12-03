@@ -1,10 +1,10 @@
 # 🌍 Outer World - Business & Strategy Layer
 
-> The external context in which AdPilot operates: market dynamics, competitive landscape, and long-term vision.
+> The external context in which Draper operates: market dynamics, competitive landscape, and long-term vision.
 
 ## Purpose
 
-This layer captures the "why" behind AdPilot:
+This layer captures the "why" behind Draper:
 - **Business Model** - How we create and capture value
 - **Market Analysis** - Who we serve and compete with
 - **Strategy** - Where we're going and how we'll get there

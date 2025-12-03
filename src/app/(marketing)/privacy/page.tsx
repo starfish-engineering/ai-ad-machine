@@ -10,7 +10,7 @@ export default function PrivacyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
               <p className="text-gray-600 mb-4">
-                AdPilot ("we," "our," or "us") is committed to protecting your privacy. 
+                Draper ("we," "our," or "us") is committed to protecting your privacy. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard 
                 your information when you use our PPC management platform and services.
               </p>
@@ -114,8 +114,8 @@ export default function PrivacyPage() {
                 please contact us at:
               </p>
               <div className="mt-4 text-gray-600">
-                <p>AdPilot Privacy Team</p>
-                <p>Email: privacy@adpilot.com</p>
+                <p>Draper Privacy Team</p>
+                <p>Email: privacy@draperads.com</p>
                 <p>Address: 123 Marketing Lane, Suite 400, San Francisco, CA 94105</p>
               </div>
             </section>
